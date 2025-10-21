@@ -1,0 +1,8 @@
+{
+    "liveServer.settings.port": 5503,
+    "editor.formatOnSave": false,
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.python"
+    },
+    "python.formatting.provider": "black"
+}
