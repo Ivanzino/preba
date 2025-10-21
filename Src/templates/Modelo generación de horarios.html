@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <!-- Configuración de codificación y viewport -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Descripción para SEO y autor del proyecto -->
+  <meta name="description"
+    content="Editor de horarios para SENA, que permite gestionar y exportar horarios en PDF, CSV y Excel." />
+  <meta name="author" content="SENA ADSO 2025" />
+
+  <title>Horarios</title>
+  <link rel="icon" href="../static/img/xx_modified-removebg-preview.png">
+
+  <!-- Estilos principales -->
+  <link rel="stylesheet" href="../static/css/horarios.css" />
+  <link rel="stylesheet" href="../static/css/Modelo generación de horarios.css  " />
+
+  <!-- Librerías para exportación de contenidos -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+  <!-- SweetAlert2 para diálogos modales estilizados -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+  <!-- HEADER / NAVEGACIÓN DE TURNOS -->
+  <header>
+    <nav class="main-nav">
+      <!-- IZQUIERDA: label de sede -->
+      <div class="nav-left">
+        <!-- Botón de home -->
+        <a href="/inicio_gestor" class="btn-home" title="Ir al inicio">
+          <i class="bi bi-house-door"></i>
+        </a>
+        <!-- Label de sede -->
+        <span id="sede-label">Sede: —</span>
+      </div>
+
+      <!-- CENTRO: botones de turno -->
+      <div class="nav-center">
+        <button class="nav-btn active" data-target="morning" aria-label="Turno de mañana">Mañana</button>
+        <button class="nav-btn" data-target="afternoon" aria-label="Turno de tarde">Tarde</button>
+        <button class="nav-btn" data-target="night" aria-label="Turno de noche">Noche</button>
+      </div>
+      <!-- DERECHA: botón maestro de exportar y su menú -->
+      <div class="nav-right">
+        <div class="export-wrapper">
+          <button id="toggle-export" class="btn-export">Exportar</button>
+          <div id="export-menu" class="export-menu">
+            <button class="btn-export" onclick="descargarPDF()">PDF</button>
+            <button class="btn-export" onclick="descargarCSV()">CSV</button>
+            <button class="btn-export" onclick="descargarExcel()">Excel</button>
+            <button class="btn-export" onclick="descargarResumen()">Resumen</button>
+          </div>
+        </div>
+      </div>
+
+
+    </nav>
+  </header>
+
+  <!-- CONTROLES DE EXPORTACIÓN -->
+  <main>
+    <div class="export-buttons" id="fichas-btn-container" style="display:none;">
+      <button class="btn-export" onclick="obtenerFichasSinHorarios()">
+        Fichas sin Horarios
+      </button>
+
+      <!-- NUEVO CONTENEDOR DE FILTROS Y RESUMEN -->
+      <div class="filters-container">
+        <select id="filter-competencias" class="filter-select">
+          <option value="">Competencias</option>
+        </select>
+        <select id="filter-resultados" class="filter-select">
+          <option value="">Resultados</option>
+        </select>
+        <select id="filter-instructor" class="filter-select">
+          <option value="">Instructor</option>
+        </select>
+        <button id="view-summary" class="btn-export">
+          Ver resumen
+        </button>
+      </div>
+    </div>
+
+    <!-- MODAL DE RESUMEN -->
+    <div id="summary-overlay" class="overlay" aria-hidden="true">
+      <div id="summary-modal" class="modal">
+        <h3 class="modal-title">Resumen</h3>
+        <div class="summary-content">
+          <div class="summary-section section-competencias">
+            <h4>Competencias</h4>
+            <ul id="summary-competencias"></ul>
+          </div>
+          <div class="divider"></div>
+          <div class="summary-section section-raps">
+            <h4>RAPS</h4>
+            <ul id="summary-raps"></ul>
+          </div>
+          <div class="divider"></div>
+          <div class="summary-section section-instructores">
+            <h4>Instructores</h4>
+            <ul id="summary-instructores"></ul>
+          </div>
+        </div>
+        <button id="assign-btn" class="btn-export">Asignar</button>
+      </div>
+    </div>
+
+
+
+    <!-- Secciones por turno -->
+    <section id="morning" class="shift active">
+      <div class="legend-container"></div>
+    </section>
+    <section id="afternoon" class="shift">
+      <div class="legend-container"></div>
+    </section>
+    <section id="night" class="shift">
+      <div class="legend-container"></div>
+    </section>
+  </main>
+
+  <!-- TEMPLATE DE BLOQUE DE HORARIO -->
+  <template id="slot-template">
+    <div class="time-slot" draggable="true">
+      <div class="slot-content">
+        <div class="slot-title"></div>
+        <div class="slot-instructor"></div>
+        <div class="slot-ambiente"></div>
+      </div>
+      <div class="handle"></div>
+    </div>
+  </template>
+
+  <!-- OVERLAY: FORMULARIO DE EDICIÓN -->
+  <div class="overlay" id="form-overlay" aria-hidden="true">
+    <div class="modal" aria-labelledby="form-title">
+      <h3 id="form-title">Editar Bloque</h3>
+      <input id="f-sigla" placeholder="Sigla" />
+      <input id="f-instructor" placeholder="Instructor" />
+      <select id="f-ambiente">
+        <option value="">-- Ambiente --</option>
+      </select>
+      <button onclick="saveForm()">Guardar</button>
+      <button onclick="closeForm()">Cancelar</button>
+    </div>
+  </div>
+
+  <!-- OVERLAY: MODAL DE INFORMACIÓN DE SLOT -->
+  <div id="info-overlay">
+    <div id="info-modal" class="animated-modal futuristic-theme">
+      <button onclick="closeInfoModal()" class="close-info-modal">✖️</button>
+      <!-- Ficha muestra número y nombre concatenados -->
+      <h2 id="info-ficha" class="modal-title">Ficha: </h2>
+      <!-- Detalles clave -->
+      <p><strong>Instructor:</strong> <span id="info-instructor"></span></p>
+      <p><strong>Ambiente:</strong> <span id="info-ambiente"></span></p>
+      <p><strong>Competencia:</strong> <span id="info-competencia"></span></p>
+      <div class="raps-section">
+        <h4>🧠 Resultados de Aprendizaje (RAPS):</h4>
+        <div id="info-raps" class="raps-scroll"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTROLES DE NAVEGACIÓN -->
+  <div class="pagination-controls">
+    <button id="prev-btn" class="btn-nav">Atrás</button>
+    <button id="next-btn" class="btn-nav">Siguiente</button>
+  </div>
+
+
+  <!-- LÓGICA DE LA APLICACIÓN -->
+  <script src="../static/js/Modelo generación de horarios.js" defer></script>
+</body>
+
+</html>

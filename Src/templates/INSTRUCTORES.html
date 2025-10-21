@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tablas </title>
+  <!-- style css -->
+  <link rel="stylesheet" href="../static/css/INSTRUCTORES.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <!-- style Datatables -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.1.2/css/dataTables.bootstrap5.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <!-- MAROLOVY -->
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="../static/css/interfazmarlovyella.css">
+
+</head>
+<header class="header">
+  <nav class="sena-nav">
+    <ul>
+      <li><a href="../template/interfazmarlovy.html">Home</a></li>
+      <li><a href="../template/creacion_de_horario_marlovy.html">Creación de Horario</a></li>
+      <li><a href="../template/fr.html">Asociar RAPS</a></li>
+      <li>
+        <a id="option">Opciones Adicionales</a>
+        <ul>
+          <li><a href="../template/crear_ambientes.html">Registrar Ambiente</a></li>
+          <li><a href="../template/crear_centros.html">Registrar Centro</a></li>
+          <li><a href="../template/crear_perfiles.html">Crear Perfiles</a></li>
+          <li><a href="../template/crear_trimestre.html">Crear Trimestres del Año</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="../template/registrar_instru_marlovy.html">Instructor</a>
+        <ul>
+          <li><a href="../template/registrar_instru_marlovy.html">Registrar Instructor</a></li>
+          <li><a href="../template/registrar_instru_marlovy.html">Asociar Instructor</a></li>
+          <li><a href="../template/registrar_instru_marlovy.html">Crear Agenda</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<body>
+
+  <div class="caja_nuevo" id="caja_nuevo">
+    <div class="contenedor1">
+      <form id="registro-form" action="registrar" method="post">
+        <span class="close3">&times;</span>
+        <h3>Registrar Instructor</h3>
+        <div class="probar">
+          <div class="labelselect2">
+            <label for="cedula">Cedula del Instructor:</label>
+            <input type="number" id="cedula" placeholder="Ej: 1096801877" required name="cedula">
+          </div>
+
+          <div class="labelselect2">
+            <label for="nombre">Nombre Completo:</label>
+            <input type="text" id="nombre" placeholder="Ej: Lucdovina Herrea Fúnez" required name="nombre">
+          </div>
+        </div>
+        <div class="probar">
+          <div class="labelselect2">
+            <label for="formacion">Centro de Formación:</label>
+            <select name="centros" id="formacion">
+              <option value="select">Seleccionar</option>
+              {% for centro in centros %}
+              <option name="cent" value="{{ centro[0] }}">{{ centro[1] }}</option>
+              {% endfor %}
+            </select>
+
+
+            </select>
+          </div>
+          <div class="labelselect2">
+            <label for="telefono">Vinculo del instructor:</label>
+            <select name="vinculo" id="vinculo">
+              <option value="X">Seleccionar</option>
+              <option value="0">Funcionario</option>
+              <option value="1">Contratista</option>
+            </select>
+          </div>
+        </div>
+        <div class="probar">
+          <div class="labelselect2">
+            <label for="perfil">Perfil del Instructor:</label>
+            <select name="perfiles" id="titulosCarreras">
+              <option value="select">Seleccionar</option>
+              {% for perfil in perfiles %}
+              <option name="perf" value="{{ perfil[0] }}">{{ perfil[1] }}</option>
+              {% endfor %}
+            </select>
+
+          </div>
+          <div class="labelselect2">
+            <label for="email">Correo electrónico:</label>
+            <input type="email" id="email" placeholder="Ej: ejemplo@gmail.com" required name="correo">
+          </div>
+
+        </div>
+        <div class="labelselect2">
+          <label for="telefono">Teléfono:</label>
+          <input type="number" id="telefono" placeholder="Ej: 3133727913" required name="telefono">
+        </div>
+
+        </div>
+
+        <button type="submit" class="boton" onclick="showAlert()">Registrar</button>
+
+      </form>
+    </div>
+  </div>
+
+  <div id="madulo" class="madulo">
+    <div class="modal-content-2">
+      <span class="close-2">&times;</span>
+      <h2>Actualiza tu informacion</h2>
+
+
+      <div class="mid">
+        <div class="datos">
+          <h3 class="clien-h3">Datos del Cliente</h3>
+          <div class="fondo-cliente">
+            <div class="info-cliente">
+              <div class="form-group-2">
+                <label class="tamaño-2">Nombre </label>
+                <input type="text" class="tamaño-cli">
+              </div>
+              <div class="form-group-2">
+                <label class="tamaño-2">Direccíon </label>
+                <input type="text" class="tamaño-cli">
+              </div>
+              <div class="form-group-2">
+                <label class="tamaño-2">Email </label>
+                <input type="text" class="tamaño-cli">
+              </div>
+            </div>
+            <div class="info-cliente2">
+              <div class="form-group-2">
+                <label class="tamaño-2">ciudad </label>
+                <input type="text" class="tamaño-cli">
+              </div>
+              <div class="form-group-2">
+                <label class="tamaño-2">Tels.: </label>
+                <input type="text" class="tamaño-cli">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="con-boton">
+        <input type="submit" class="chi">
+      </div>
+
+    </div>
+  </div>
+
+
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Asociar Competencias</h2>
+      <div class="logo-img">
+        <img src="../static/img/logo.png" class="logo-mts" />
+      </div>
+
+      <div class="container-re">
+        <div class="container-content">
+          <div class="container-info">
+            <input type="text" placeholder="ID" class="tamaño-cli-2" />
+            <input type="text" placeholder="Nombre" class="tamaño-cli-2" />
+            <input type="text" placeholder="Direccion" class="tamaño-cli-2" />
+            <input type="text" placeholder="ciudad" class="tamaño-cli-2" />
+            <input type="text" placeholder="telefono" class="tamaño-cli-2" />
+            <!-- <input type="text" placeholder="Vende" class="tamaño-cli-2" />
+                  <input type="text" placeholder="Empreza" class="tamaño-cli-2" /> -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="fondo-h2">
+    <div class="titulo">
+      <h2>Bienvenido Gestor</h2>
+    </div>
+    <div class="titulo">
+      <h2>Instructor:Andres Muñoz</h2>
+    </div>
+  </div>
+  <div class="botones-new">
+    <button class="boton_nuevo" id="boton_nuevo">
+      Nuevo
+    </button>
+  </div>
+  <div class="botones-new2">
+    <button class="boton_nuevo">
+      Masivo
+    </button>
+  </div>
+
+  <div class="container mt-5 ">
+
+
+
+    <table id="tec-serv" class="table table-striped" style="width: 100%">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Cedula</th>
+          <th>Nombre</th>
+          <th>Centro de Formacion</th>
+
+          <th>Opciones</th>
+        </tr>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>1005184520</td>
+          <td>Colleen Hurst</td>
+          <td>Centro Industrial y del Desarollo Tecnologico</td>
+
+          <td><i class="bi bi-eye"></i><i class="bi bi-pencil-square" id="Btn2"></i><i class="bi bi-journal-text"
+              id="openModalBtn"></i><i class="bi bi-calendar-date" id="mesage"></i><i class="bi bi-vinyl-fill"></i></td>
+        </tr>
+
+        </tfoot>
+    </table>
+  </div>
+
+  <!-- js y jquery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.datatables.net/2.1.2/js/dataTables.js"></script>
+  <script src="https://cdn.datatables.net/2.1.2/js/dataTables.bootstrap5.js"></script>
+  <!-- script para iniciar la tables -->
+  <script src="../static/js/INSTRUCTORES.js"></script>
+</body>
+
+</html>

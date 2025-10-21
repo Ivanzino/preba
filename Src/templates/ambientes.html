@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../static/css/ambientes.css">
+    <link rel="icon" href="../static/img/xx_modified-removebg-preview.png">
+    <title>Registro de Ambientes</title>
+    {% include 'nav.html' %}
+</head>
+<body> 
+    <div class="form-container">
+        <h1>Registrar Nuevo Ambiente</h1>
+        <form class="form" method="POST">
+            <input class="cuadro" type="text" name="Ambiente" id="number" placeholder="Introduce el Nombre del Ambiente" required>
+            <input class="cuadro" type="text" name="Bloque" id="bloque" placeholder="Introduce el Bloque" required>
+            <label class="cuadro" for="Sede">Elige una Sede:</label>
+            <select class="select" id="Sede" name="Sede">
+              {% for sede in sedes %}
+                <!-- Asumiendo que sede es una tupla: (codigo_sede, nombre) -->
+                <option value="{{ sede[0] }}">{{ sede[1] }}</option>
+              {% endfor %}
+            </select>
+            <label class="cuadro" for="Tipo">Elige un Tipo</label>
+            <select class="select" name="Tipo" id="Tipo">
+                <option value="0">Convencional</option>
+                <option value="1">Especializado</option>
+                <option value="2">Taller</option>
+                <option value="3">Laboratorio</option>
+            </select>
+            <input class="boton" type="submit" value="Guardar Ambiente">
+        </form>
+    </div>
+</body>
+</html>

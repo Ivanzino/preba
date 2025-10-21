@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Generar Horario</title>
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet" />
+  <script
+    src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"
+    defer
+  ></script>
+  <style>
+    #calendar {
+      max-width: 900px;
+      margin: 40px auto;
+    }
+  </style>
+</head>
+<body>
+  <h2>Generar horario por ficha</h2>
+
+  <label for="ficha_id">Seleccione ficha:</label>
+  <select id="ficha_id">
+    <option disabled selected>-- Seleccione una ficha --</option>
+  </select>
+  <button id="btn-generar">Generar</button>
+
+  <div id="calendar"></div>
+
+  <script>
+    let calendar;
+
+    document.addEventListener("DOMContentLoaded", () => {
+      // Cargar fichas activas desde el backend
+      fetch("/fichas_activas")
+        .then(res => res.json())
+        .then(fichas => {
+          const select = document.getElementById("ficha_id");
+
+          if (!Array.isArray(fichas) || fichas.length === 0) {
+            const opt = document.createElement("option");
+            opt.disabled = true;
+            opt.textContent = "No hay fichas activas disponibles";
+            select.appendChild(opt);
+            return;
+          }
+
+          fichas.forEach(f => {
+            const opt = document.createElement("option");
+            opt.value = f.numero_ficha;
+            opt.textContent = `Ficha ${f.numero_ficha}`;
+            select.appendChild(opt);
+          });
+        })
+        .catch(error => {
+          console.error("Error al cargar fichas activas:", error);
+        });
+
+      // Inicializar el calendario
+      const calendarEl = document.getElementById("calendar");
+      calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: "timeGridWeek",
+        slotMinTime: "06:00:00",
+        slotMaxTime: "20:00:00",
+        allDaySlot: false,
+        locale: "es",
+        headerToolbar: { left: "", center: "title", right: "" },
+        height: "auto",
+        events: []
+      });
+      calendar.render();
+
+      // Activar botón de generación de horario
+      document.getElementById("btn-generar").addEventListener("click", generarHorario);
+    });
+
+    function generarHorario() {
+      if (!calendar) {
+        alert("El calendario aún no está listo. Por favor, espera un momento.");
+        return;
+      }
+
+      const ficha_id = document.getElementById("ficha_id").value;
+      if (!ficha_id) {
+        alert("Por favor, seleccione una ficha.");
+        return;
+      }
+
+      fetch("/generar_horario", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ficha_id: parseInt(ficha_id) })
+      })
+        .then(res => res.json())
+        .then(data => {
+          calendar.removeAllEvents();
+
+          if (data.error) {
+            alert("❌ " + data.error);
+            return;
+          }
+
+          const dias = {
+            lunes: 1, martes: 2, miercoles: 3, jueves: 4,
+            viernes: 5, sabado: 6
+          };
+
+          const hoy = new Date();
+          const base = hoy.getDate() - hoy.getDay() + 1;
+
+          data.forEach(item => {
+            const diaIndex = dias[item.dia?.toLowerCase()];
+            if (!diaIndex) return;
+
+            const fecha = new Date(hoy.getFullYear(), hoy.getMonth(), base + diaIndex - 1);
+            const [hora, min] = item.hora.split(":");
+            const inicio = new Date(fecha);
+            inicio.setHours(parseInt(hora), parseInt(min));
+            const fin = new Date(inicio.getTime() + item.duracion * 60 * 60 * 1000);
+
+            calendar.addEvent({
+              title: `RAP ${item.rap_id} - Instr. ${item.instructor_id}`,
+              start: inicio,
+              end: fin,
+              color: "#4e73df"
+            });
+          });
+        })
+        .catch(error => {
+          alert("Error generando horario: " + error);
+        });
+    }
+  </script>
+</body>
+</html>

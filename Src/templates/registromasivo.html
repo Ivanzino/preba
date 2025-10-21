@@ -1,0 +1,88 @@
+<!-- templates/upload_instructors.html -->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro Masivo de Instructores</title>
+    <link rel="stylesheet" href="/HorariosSena/Src/static/css/registromasivo.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="contenedor">
+        <h2>Cargar Archivo Excel</h2>
+        <form id="uploadForm" enctype="multipart/form-data">
+            <div class="labelselect">
+                <label for="fileInput">Selecciona un archivo Excel:</label>
+                <input type="file" id="fileInput" name="file" accept=".xlsx, .xls" required>
+            </div>
+            <div class="boton">
+                <button type="submit">Cargar y Previsualizar</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Contenedor para la vista previa -->
+    <div id="previewContainer"
+        style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5);">
+        <div id="previewContent"
+            style="background:white; margin:5% auto; padding:20px; width:90%; max-width:800px; position:relative; border-radius:8px;">
+            <span class="close-preview" style="position:absolute; top:10px; right:15px; font-size:24px; cursor:pointer;"
+                onclick="closePreview()">&times;</span>
+        </div>
+    </div>
+
+    <script>
+        const uploadUrl = '/upload-excel';        // Endpoint para procesar Excel
+        const insertUrl = '/insert-instructors';   // Endpoint para insertar instructores
+
+        document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const form = e.target;
+            const data = new FormData(form);
+            try {   
+                const res = await fetch(uploadUrl, { method: 'POST', body: data });
+                const json = await res.json();
+                if (json.error) {
+                    alert(json.error);
+                } else {
+                    showPreview(json.html);
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Error de red al enviar el archivo.');
+            }
+        });
+
+        function showPreview(html) {
+            const container = document.getElementById('previewContainer');
+            const content = document.getElementById('previewContent');
+            content.innerHTML = html;
+            container.style.display = 'block';
+            attachHandlers();
+        }
+
+        function closePreview() {
+            document.getElementById('previewContainer').style.display = 'none';
+        }
+
+        function attachHandlers() {
+            // Eliminar fila
+            document.querySelectorAll('.delete-row').forEach(btn => {
+                btn.addEventListener('click', () => btn.closest('tr').remove());
+            });
+            // Ajustar acción de inserción
+            const insertForm = document.getElementById('instructorsForm');
+            if (insertForm) {
+                insertForm.action = insertUrl;
+            }
+        }
+    </script>
+</body>
+
+</html>

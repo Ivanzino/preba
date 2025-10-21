@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Asociar Competencias</title>
+  
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <!-- SweetAlert2 CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  <!-- Select2 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  
+  {% include 'nav.html' %}
+  <!-- Puedes agregar o modificar estilos aquí -->
+  <link rel="stylesheet" href="../static/css/asociarCompetencias.css">
+  <style>
+    /* Clase para ocultar columnas visualmente */
+    .oculto {
+      display: none;
+    }
+    /* Estilos para mostrar perfiles en fila */
+    .perfiles-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .perfil-item {
+      background-color: #f1f1f1;
+      border-radius: 15px;
+      padding: 5px 15px;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+  <!-- Inyección de variables globales (procesadas por Jinja) -->
+  <script>
+    const cedula = "{{ cedula }}";
+    const nombre_instructor = "{{ nombre_instructor }}";
+    const perfiles = {{ perfiles|tojson|safe }};
+    const token = "{{ token }}";
+    console.log("Variables inyectadas:", cedula, nombre_instructor, perfiles, token);
+  </script>
+
+  <div class="contenedor-principal">
+    <div class="contenedor-modal-grande">
+      <div class="d-flex justify-content-between align-items-center">
+        <h2 class="titulo">Asociar Competencias</h2>
+        <!-- BOTÓN QUE APARECERÁ SOLO CUANDO HAYA 10 COMPETENCIAS FALTANTES -->
+        <button id="verFaltantesBtn" class="btn btn-warning d-none">Competencias No Asociadas</button>
+      </div>
+
+      <!-- Información del Instructor -->
+      <div id="info-instructor" class="mb-3">
+        <p>Instructor: <strong>{{ nombre_instructor }}</strong></p>
+        <div class="d-flex align-items-center">
+          <span class="me-2">Perfiles:</span>
+          <div class="perfiles-container">
+            {% for perfil in perfiles %}
+              <div class="perfil-item">{{ perfil.nombre }}</div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      
+      <!-- Sección para asociar competencias -->
+      <div class="opciones mb-3">
+        <label for="buscar">Buscar Competencias:</label>
+        <select id="buscar" class="form-select">
+          <option value="">Seleccionar</option>
+        </select>
+        <!-- Botón "Asociar" con clase btn-green para el color verde (#1e7e34) -->
+        <button id="btn-asociar" class="btn btn-green mt-2">Asociar</button>
+      </div>
+      
+      <!-- Tabla para mostrar asociaciones agrupadas por competencia -->
+      <div class="table-container mt-4">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th class="oculto">ID Asociación</th>
+              <th class="oculto">ID Competencia</th>
+              <th>Nombre Competencia</th>
+              <th>Sigla</th>
+              <th>Opciones</th>
+            </tr>
+          </thead>
+          <tbody id="tabla-asociaciones">
+            <!-- Se cargarán las asociaciones agrupadas por JS -->
+          </tbody>
+        </table>
+      </div>
+      
+      <!-- Botones de paginación -->
+      <div class="pagination mt-3 text-center">
+        <button id="btn-prev" class="btn btn-secondary me-2" disabled>Anterior</button>
+        <span id="page-info">Página 1</span>
+        <button id="btn-next" class="btn btn-secondary ms-2">Siguiente</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE COMPETENCIAS NO ASOCIADAS -->
+  <div class="modal fade" id="modalFaltantes" tabindex="-1" aria-labelledby="faltantesLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content  modal-ancho-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="faltantesLabel">Competencias No Asociadas</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <ul id="listaFaltantes" class="list-group"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Incluir jQuery, Bootstrap JS, SweetAlert2 y Select2 -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  <!-- Archivo JS externo -->
+  <script src="../static/js/asociarCompetencias.js"></script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Perfiles</title>
+        <link rel="stylesheet" href="/HorariosSena/Src/static/css/interfazmarlovy.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+            rel="stylesheet">
+        <script src="../static/js/interfazmarlovy.js"></script>
+    </head>
+    
+<body>
+    <section id="registrar-instru">
+        <div class="contenedor">
+            <h2>REGISTRAR PERFIL </h2>
+            <form>
+                <h3>Registrar Usuario</h3>
+                <div class="labelselect">
+                    <label for="cedula">Por favor, digite la cédula del usuario:</label>
+                    <input type="number" id="cedula" placeholder="Ej: 1096801877" required>
+                </div>
+                <div class="labelselect">
+                    <label for="nombre">Por favor, digite el nombre del usuario:</label>
+                    <input type="text" id="nombre" placeholder="Ej: Anastasio Rodriguez" required>
+                </div>
+                <div class="labelselect">
+                    <label for="email">Por favor, digite el correo electrónico del usuario:</label>
+                    <input type="email" id="email" placeholder="Ej: ejemplo@gmail.com" required>
+                </div>
+                <div class="labelselect">
+                    <label for="telefono">Por favor, digite el teléfono del usuario:</label>
+                    <input type="tel" id="telefono" placeholder="Ej: 3133727913" required>
+                </div>
+                <div class="labelselect">
+                    <label for="Contraseña">Por favor, digite la nueva contraseña del usuario:</label>
+                    <input type="password" id="Contraseña" placeholder="" required>
+                </div>
+                <div class="labelselect">
+                    <label for="Contraseña">Por favor, seleccione el rol del nuevo usuario:</label>
+                    <select id="rol" name="rol" required>
+                        <option disabled selected="seleccionar">Selecciona aquí</option>
+                        <option value="instructor">Instructor</option>
+                        <option value="coordinador">Coordinador</option>
+                        <option value="admin">Administrador</option>
+                    </select>
+                </div>
+                <div class="labelselect">
+                    <label for="centro">Por favor, digite el código del centro:</label>
+                    <input type="number" id="centro" placeholder="Ej: 21036" required>
+                </div>
+
+                <div class="boton">
+                    <button type="submit">Registrar</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+
+</body>
+</html>

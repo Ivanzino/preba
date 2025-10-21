@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SENA HORARIOS</title>
+  <link rel="icon" href="../../static/img/xx_modified-removebg-preview.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background-image: url(../../static/img/fondo_paul.jpg);
+      background-position: center;
+      background-size: cover;
+    }
+
+    /* Para navegadores WebKit (Chrome, Safari, Edge) */
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* Para Firefox */
+    input[type="number"] {
+      -moz-appearance: textfield;
+    }
+
+    .formlop:hover {
+      background-color: rgba(255, 255, 255, 0.716);
+      transition: 1s;
+
+    }
+
+    .formlop {
+      transition: 1s;
+      background-color: rgba(255, 255, 255, 0.796);
+      backdrop-filter: blur(10px);
+    }
+  </style>
+</head>
+
+<body class="flex items-center justify-center min-h-screen bg-gray-100">
+  <div class="formlop p-8 rounded-1xl shadow-lg flex w-[700px] h-[400px] relative">
+    <!-- Botón de volver -->
+    <a href="index.html"
+      class="group absolute top-4 left-4 text-white p-2 transition duration-300 ease-in-out hover:bg-white hover:text-green-500 hover:shadow-md">
+      <svg class="w-6 h-6 text-green-700 transition-transform duration-300  " fill="currentColor" viewBox="0 0 20 20"
+        xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd"
+          d="M10 3a1 1 0 01.707 1.707L6.414 9H17a1 1 0 110 2H6.414l4.293 4.293a1 1 0 01-1.414 1.414l-6-6a1 1 0 010-1.414l6-6A1 1 0 0110 3z"
+          clip-rule="evenodd"></path>
+      </svg>
+    </a>
+
+
+    <!-- Sección Izquierda -->
+    <div class="w-1/2 flex flex-col items-center justify-center p-4">
+      <img src="../../static/img/Logo-de-SENA-png-verde-300x300-1.png" alt="Imagen"
+        class="w-32 h-32 object-cover rounded-lg" />
+      <p class="mt-4 text-center text-gray-600">
+        Bienvenido a Horarios Sena. Inicia sesión con tu Identificacion.
+      </p>
+    </div>
+
+    <!-- Sección Derecha -->
+    <div class=" w-1/2 flex flex-col justify-center p-4">
+      <div class="flex justify-center mb-4 text-2xl font-bold">
+        INICIAR SESION
+      </div>
+      <form action="/gestor" method="POST" id="loginForm">
+
+
+        <input type="number" placeholder="Ingrese su Identificacion:"
+          class="w-full px-4 py-2 mb-3 border  focus:outline-none focus:ring-2 focus:ring-blue-500" required id="username" name="username"/>
+        <input type="password" placeholder="Contraseña"
+          class="w-full px-4 py-2 mb-3 border  focus:outline-none focus:ring-2 focus:ring-blue-500" required id="password" name="password" />
+        <button type="submit" class="w-full bg-[#4e8e37] text-white py-2 rounded-lg hover:bg-blue-600 hover:shadow-md">
+          Iniciar sesión
+        </button>
+      </form>
+      <div class="mt-4 text-sm text-center">
+        <a href="#" class="text-blue-500 hover:underline">¿Olvidaste tu contraseña?</a>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

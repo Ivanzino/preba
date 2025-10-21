@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tabla de Programa de Formación</title>
+    <link rel="stylesheet" href="../static/css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="/HorariosSena/Src/static/css/interfazmarlovy.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </head>
+
+  <body>
+    <div class="header">
+      <button id="agregar-btn" class="uno">Crear malla</button>
+    </div>
+
+    <div class="paginacion">
+      <button class="page-btn" data-trimestre="1">Trimestre 1</button>
+      <button class="page-btn" data-trimestre="2">Trimestre 2</button>
+      <button class="page-btn" data-trimestre="3">Trimestre 3</button>
+      <button class="page-btn" data-trimestre="4">Trimestre 4</button>
+      <button class="page-btn" data-trimestre="5">Trimestre 5</button>
+      <button class="page-btn" data-trimestre="6">Trimestre 6</button>
+      <button class="page-btn" data-trimestre="7">Trimestre 7</button>
+    </div>
+
+    <!-- formulario de crear malla  -->
+    <div id="competencia-modal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Crear malla</h2>
+        <form id="formuka">
+          <div class="form-group">
+            <label id="ll" for="js-example-basic-single">Programa</label>
+            <select class="js-example-basic-single rol" id="ll" name="state">
+              <option value="AL">Alabama</option>
+              <option value="WY">Construcción</option>
+              <option value="WY">Análisis y desarrollo del software</option>
+              <option value="WY">Gestión Documental</option>
+              <option value="WY">
+                Análisis y desarrollo del software Análisis y desarrollo del
+                software
+              </option>
+              <option value="WY">...</option>
+              <option value="WY">...</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <div>
+              <label id="sig" for="sig">Sigla</label>
+              <input type="text" id="sig" />
+            </div>
+            <div>
+              <label for="fic">Ficha</label>
+              <input type="number" id="fic" />
+            </div>
+            <div>
+              <label for="cod">Codigo</label>
+              <input type="number" id="cod" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="nom">Nombre del proyecto</label>
+            <input type="text" id="nom" />
+          </div>
+
+          <div class="form-group">
+            <label for="instructor">Nombre Instructor</label>
+            <input type="text" id="instructor" />
+          </div>
+
+          <div class="form-row">
+            <div>
+              <label for="can">Cantidad de trimestre</label>
+              <select id="can">
+                <option value="">Seleccione la cantidad de trimestres</option>
+                <option value="1">1 Trimestre</option>
+                <option value="2">2 Trimestres</option>
+                <option value="3">3 Trimestres</option>
+                <option value="4">4 Trimestres</option>
+                <option value="5">5 Trimestres</option>
+                <option value="6">6 Trimestres</option>
+                <option value="7">7 Trimestres</option>
+              </select>
+            </div>
+            <div>
+              <label for="jornada-programa">Jornada</label>
+              <select id="jornada-programa" required>
+                <option value="">Seleccione la jornada</option>
+                <option value="mixta">Mixta</option>
+                <option value="diurna">Diurna</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div>
+              <label for="fecha-inicio">Fecha Inicio</label>
+              <input type="date" id="fecha-inicio" />
+            </div>
+            <div>
+              <label for="fecha-fin">Fecha Fin</label>
+              <input type="date" id="fecha-fin" />
+            </div>
+          </div>
+
+          <button type="button" id="guardar-competencia" class="dos">
+            Crear malla
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- formulario de Asociacion -->
+    <form id="formuka2">
+      <div class="modal-contentt">
+        <label for="js-example-basic-single ">Competencia</label>
+        <select class="js-example-basic-single" name="state">
+          <option value="AL">Alabama</option>
+          <option value="WY">Construcción</option>
+          <option value="WY">Analisis y desarrollo del software</option>
+          <option value="WY">Gestion Documental</option>
+          <option value="WY">...</option>
+          <option value="WY">...</option>
+          <option value="WY">...</option>
+        </select>
+
+        <label for="js-example-basic-single ">Rap</label>
+        <select class="js-example-basic-single" name="state">
+          <option value="AL">Alabama</option>
+          <option value="WY">Construcción</option>
+          <option value="WY">Analisis y desarrollo del software</option>
+          <option value="WY">Gestion Documental</option>
+          <option value="WY">...</option>
+          <option value="WY">...</option>
+          <option value="WY">...</option>
+        </select>
+
+        <label for="fic">Horas de ejecuccion</label>
+        <input type="number" id="fic" />
+
+        <button type="button" id="guardar-competencia">Asociar</button>
+      </div>
+    </form>
+    <script src="../static/js/iraf.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="vendor/select2/dist/js/select2.min.js"></script>
+  </body>
+</html>

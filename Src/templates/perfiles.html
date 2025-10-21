@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Perfiles</title>
+    <link rel="stylesheet" href="../static/css/perfiles.css">
+    <link rel="icon" href="../static/img/xx_modified-removebg-preview.png">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    {% include 'nav.html' %}
+</head>
+<body>
+    <section class="formulario">
+        <form id="perfilForm">
+            <h3>INGRESA UN PERFIL</h3>
+            <input id="perfilInput" class="cuadro" type="text" name="profesion" placeholder="Introduce una profesión">
+            <input class="boton" type="submit" value="Registrar">
+        </form>
+    </section>
+
+    <script>
+        document.getElementById("perfilForm").addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const input = document.getElementById("perfilInput");
+            const nombre = input.value.trim();
+
+            if (!nombre) {
+                Swal.fire({
+                    icon: "warning",
+                    title: "Campo vacío",
+                    text: "Debes ingresar un perfil.",
+                    confirmButtonColor: "#1e7e34",
+                    background: "#fff",              // Fondo del popup 100% blanco
+                    backdrop: "rgba(0,0,0,0.4)",     // Oscurece sólo el exterior
+                    didOpen: () => {
+                      const popup = Swal.getPopup(); 
+                      const logo = document.createElement("img");
+                      logo.src = "../static/img/logo-sena-verde-png-sin-fondo.webp";
+                      // estilos para que quede centrado y atrás del texto
+                      Object.assign(logo.style, {
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                        opacity: "0.3",
+                        width: "220px",
+                        pointerEvents: "none",   // para que no interfiera con el click del botón
+                        zIndex: "0"
+                      });
+                      // ponlo como primer hijo para que todo lo demás (texto, botones) quede por encima
+                      popup.insertBefore(logo, popup.firstChild);
+                      // y asegúrate de que el contenido textual y botones tengan z-index mayor:
+                      popup.querySelectorAll(".swal2-icon, .swal2-title, .swal2-html-container, .swal2-actions")
+                           .forEach(el => el.style.zIndex = "1");
+                    }
+                  }); 
+                return;
+            }
+
+            try {
+                const response = await fetch("/registrar_perfil", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ nombre })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Éxito",
+                        text: data.mensaje,
+                        confirmButtonColor: "#1e7e34",
+                        background: "#fff",
+                        backdrop: "rgba(0,0,0,0.4)",
+                        didOpen: () => {
+                            const popup = Swal.getPopup(); 
+                            const logo = document.createElement("img");
+                            logo.src = "../static/img/logo-sena-verde-png-sin-fondo.webp";
+                            
+                            // Estilos para el logo
+                            Object.assign(logo.style, {
+                                position: "absolute",
+                                top: "50%",
+                                left: "50%",
+                                transform: "translate(-50%, -50%)",
+                                opacity: "0.2",
+                                width: "220px",
+                                pointerEvents: "none",
+                                zIndex: "0"
+                            });
+                            
+                            // Insertar el logo
+                            popup.insertBefore(logo, popup.firstChild);
+                            
+                            // Asegurar que contenido esté por encima
+                            popup.querySelectorAll(".swal2-title, .swal2-html-container, .swal2-actions")
+                                .forEach(el => el.style.zIndex = "1");
+                            
+                            // Específicamente para el icono de success
+                            const successIcon = popup.querySelector(".swal2-icon.swal2-success");
+                            if (successIcon) {
+                                // Hacer transparente el fondo circular blanco del icono success
+                                const circularLines = popup.querySelectorAll(".swal2-success-circular-line-left, .swal2-success-circular-line-right");
+                                circularLines.forEach(el => {
+                                    el.style.backgroundColor = "transparent";
+                                });
+                                
+                                // También hacer transparente el fix que SweetAlert2 usa
+                                const successFix = popup.querySelector(".swal2-success-fix");
+                                if (successFix) {
+                                    successFix.style.backgroundColor = "transparent";
+                                }
+                                
+                                // Asegurar que el anillo y la marca de verificación sean visibles
+                                const successRing = popup.querySelector(".swal2-success-ring");
+                                if (successRing) {
+                                    successRing.style.zIndex = "1";
+                                }
+                                
+                                const successLines = popup.querySelectorAll(".swal2-success-line-tip, .swal2-success-line-long");
+                                successLines.forEach(el => {
+                                    el.style.zIndex = "2";
+                                });
+                            }
+                        }
+                    });
+                    input.value = "";
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: data.error,
+                        confirmButtonColor: "#1e7e34",
+                        background: "#fff",
+                        backdrop: "rgba(0,0,0,0.4)",
+                        didOpen: () => {
+                            const popup = Swal.getPopup(); 
+                            const logo = document.createElement("img");
+                            logo.src = "../static/img/logo-sena-verde-png-sin-fondo.webp";
+                            
+                            // Estilos para el logo
+                            Object.assign(logo.style, {
+                                position: "absolute",
+                                top: "50%",
+                                left: "50%",
+                                transform: "translate(-50%, -50%)",
+                                opacity: "0.2",
+                                width: "220px",
+                                pointerEvents: "none",
+                                zIndex: "0"
+                            });
+                            
+                            // Insertar el logo
+                            popup.insertBefore(logo, popup.firstChild);
+                            
+                            // Asegurar que contenido esté por encima
+                            popup.querySelectorAll(".swal2-title, .swal2-html-container, .swal2-actions")
+                                .forEach(el => el.style.zIndex = "1");
+                            
+                            // Específicamente para el icono de success
+                            const successIcon = popup.querySelector(".swal2-icon.swal2-success");
+                            if (successIcon) {
+                                // Hacer transparente el fondo circular blanco del icono success
+                                const circularLines = popup.querySelectorAll(".swal2-success-circular-line-left, .swal2-success-circular-line-right");
+                                circularLines.forEach(el => {
+                                    el.style.backgroundColor = "transparent";
+                                });
+                                
+                                // También hacer transparente el fix que SweetAlert2 usa
+                                const successFix = popup.querySelector(".swal2-success-fix");
+                                if (successFix) {
+                                    successFix.style.backgroundColor = "transparent";
+                                }
+                                
+                                // Asegurar que el anillo y la marca de verificación sean visibles
+                                const successRing = popup.querySelector(".swal2-success-ring");
+                                if (successRing) {
+                                    successRing.style.zIndex = "1";
+                                }
+                                
+                                const successLines = popup.querySelectorAll(".swal2-success-line-tip, .swal2-success-line-long");
+                                successLines.forEach(el => {
+                                    el.style.zIndex = "2";
+                                });
+                            }
+                        }
+                    });
+                }
+            } catch (error) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error de conexión",
+                    text: "No se pudo conectar con el servidor.",
+                    confirmButtonColor: "#1e7e34",
+                    background: "#fff",
+                    backdrop: "rgba(0,0,0,0.4)",
+                    didOpen: () => {
+                        const popup = Swal.getPopup(); 
+                        const logo = document.createElement("img");
+                        logo.src = "../static/img/logo-sena-verde-png-sin-fondo.webp";
+                        
+                        // Estilos para el logo
+                        Object.assign(logo.style, {
+                            position: "absolute",
+                            top: "50%",
+                            left: "50%",
+                            transform: "translate(-50%, -50%)",
+                            opacity: "0.2",
+                            width: "220px",
+                            pointerEvents: "none",
+                            zIndex: "0"
+                        });
+                        
+                        // Insertar el logo
+                        popup.insertBefore(logo, popup.firstChild);
+                        
+                        // Asegurar que contenido esté por encima
+                        popup.querySelectorAll(".swal2-title, .swal2-html-container, .swal2-actions")
+                            .forEach(el => el.style.zIndex = "1");
+                        
+                        // Específicamente para el icono de success
+                        const successIcon = popup.querySelector(".swal2-icon.swal2-success");
+                        if (successIcon) {
+                            // Hacer transparente el fondo circular blanco del icono success
+                            const circularLines = popup.querySelectorAll(".swal2-success-circular-line-left, .swal2-success-circular-line-right");
+                            circularLines.forEach(el => {
+                                el.style.backgroundColor = "transparent";
+                            });
+                            
+                            // También hacer transparente el fix que SweetAlert2 usa
+                            const successFix = popup.querySelector(".swal2-success-fix");
+                            if (successFix) {
+                                successFix.style.backgroundColor = "transparent";
+                            }
+                            
+                            // Asegurar que el anillo y la marca de verificación sean visibles
+                            const successRing = popup.querySelector(".swal2-success-ring");
+                            if (successRing) {
+                                successRing.style.zIndex = "1";
+                            }
+                            
+                            const successLines = popup.querySelectorAll(".swal2-success-line-tip, .swal2-success-line-long");
+                            successLines.forEach(el => {
+                                el.style.zIndex = "2";
+                            });
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionar Roles de Usuarios</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../static/css/admin.css">
+    {%include 'nav.html'%}
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>Gestionar Roles de Usuarios</h1>
+            
+            <div id="mensaje-alert" class="alert alert-success" style="display: none;"></div>
+            
+            <form id="form-actualizar-rol">
+                <div class="form-group">
+                    <label for="usuario">Selecciona un Usuario:</label>
+                    <select class="form-control" id="usuario" name="usuario" required>
+                        <option value="">Seleccione un usuario</option>
+                        {% for usuario in usuarios %}
+                            {% if usuario[0] != session.get("user")[0] and usuario[2] != 'admin' %}
+                            <option value="{{ usuario[0] }}">{{ usuario[1] }} ({{ usuario[2] }})</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="nuevo_rol">Nuevo Rol:</label>
+                    <select class="form-control" id="nuevo_rol" name="nuevo_rol" required>
+                        <option value="">Seleccione un rol</option>
+                        <option value="instructor">Instructor</option>
+                        <option value="gestor">Gestor</option>
+                        <option value="gestor normal">Gestor Normal</option>
+                        <option value="admin">Administrador</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="btn btn-success mt-3">Actualizar Rol</button>
+            </form>
+            
+            <hr class="my-4">
+            
+            <button id="btn-eliminar-usuario" class="btn btn-danger w-100 mb-4">Eliminar Usuario</button>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min.js"></script>
+    <script>
+        // Inicializar Select2 para ambos selects
+        $(document).ready(function() {
+            // Primero destruimos cualquier instancia previa
+            if ($('#usuario').data('select2')) {
+                $('#usuario').select2('destroy');
+            }
+            
+            $('#usuario').select2({
+                placeholder: "Buscar por nombre",
+                allowClear: true,
+                width: '100%'
+            });
+            
+            // Función para mostrar mensaje de alerta
+            function mostrarMensaje(tipo, mensaje) {
+                const alertElement = $('#mensaje-alert');
+                alertElement.removeClass('alert-success alert-danger');
+                alertElement.addClass(tipo === 'success' ? 'alert-success' : 'alert-danger');
+                alertElement.text(mensaje);
+                alertElement.show();
+                
+                // Ocultar después de 3 segundos
+                setTimeout(function() {
+                    alertElement.hide();
+                }, 3000);
+            }
+            
+            // Manejar el envío del formulario de actualización de rol
+            $('#form-actualizar-rol').on('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(this);
+                
+                $.ajax({
+                    url: 'gestionar_roles',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        mostrarMensaje('success', response.mensaje);
+                        // Opcional: Recargar la página para mostrar los cambios
+                        setTimeout(function() {
+                            location.reload();
+                        }, 1500);
+                    },
+                    error: function(xhr) {
+                        const response = xhr.responseJSON || { mensaje: 'Error al procesar la solicitud' };
+                        mostrarMensaje('error', response.mensaje);
+                    }
+                });
+            });
+            
+            // Inicializar el botón de eliminar usuario
+            $('#btn-eliminar-usuario').on('click', function() {
+                // Cerramos cualquier select2 abierto antes de mostrar SweetAlert
+                $('#usuario').select2('close');
+                
+                let cedulaAdmin = '{{ session.get("user")[0] if session.get("user") else "" }}';
+                
+                Swal.fire({
+                    title: 'Eliminar Usuario',
+                    html: `
+                        <div class="form-group mb-3">
+                            <label for="swal-select-usuario" class="text-start d-block">Selecciona el usuario a eliminar:</label>
+                            <select id="swal-select-usuario" class="form-control">
+                                <option value="">Seleccione un usuario</option>
+                                {% for usuario in usuarios %}
+                                    {% if usuario[0] != session.get("user")[0] %}
+                                    <option value="{{ usuario[0] }}" data-rol="{{ usuario[2] }}">{{ usuario[1] }} ({{ usuario[0] }}) - {{ usuario[2] }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    `,
+                    showCancelButton: true,
+                    confirmButtonText: 'Eliminar',
+                    cancelButtonText: 'Cancelar',
+                    confirmButtonColor: '#dc3545',
+                    cancelButtonColor: '#6c757d',
+                    background: "#fff",
+                    backdrop: "rgba(0,0,0,0.4)",
+                    allowOutsideClick: false, // Evitar cierres accidentales
+                    didOpen: () => {
+                        setTimeout(() => {
+                            // Esperar un momento para inicializar Select2 dentro del SweetAlert
+                            // para asegurar que el DOM esté listo
+                            $('#swal-select-usuario').select2({
+                                placeholder: "Buscar por nombre o cédula...",
+                                dropdownParent: $('.swal2-container'),
+                                width: '100%'
+                            });
+                        }, 100);
+                        
+                        const popup = Swal.getPopup();
+                        const logo = document.createElement("img");
+                        logo.src = "../../static/img/logo-sena-verde-png-sin-fondo.webp";
+
+                        // Estilos para el logo
+                        Object.assign(logo.style, {
+                            position: "absolute",
+                            top: "50%",
+                            left: "50%",
+                            transform: "translate(-50%, -50%)",
+                            opacity: "0.2",
+                            width: "220px",
+                            pointerEvents: "none",
+                            zIndex: "0",
+                        });
+
+                        // Insertar el logo
+                        popup.insertBefore(logo, popup.firstChild);
+
+                        // Asegurar que contenido esté por encima
+                        popup
+                            .querySelectorAll(
+                                ".swal2-title, .swal2-html-container, .swal2-actions"
+                            )
+                            .forEach((el) => (el.style.zIndex = "1"));
+
+                        // Específicamente para el icono de success
+                        const successIcon = popup.querySelector(
+                            ".swal2-icon.swal2-success"
+                        );
+                        if (successIcon) {
+                            // Hacer transparente el fondo circular blanco del icono success
+                            const circularLines = popup.querySelectorAll(
+                                ".swal2-success-circular-line-left, .swal2-success-circular-line-right"
+                            );
+                            circularLines.forEach((el) => {
+                                el.style.backgroundColor = "transparent";
+                            });
+
+                            // También hacer transparente el fix que SweetAlert2 usa
+                            const successFix =
+                                popup.querySelector(".swal2-success-fix");
+                            if (successFix) {
+                                successFix.style.backgroundColor = "transparent";
+                            }
+
+                            // Asegurar que el anillo y la marca de verificación sean visibles
+                            const successRing = popup.querySelector(
+                                ".swal2-success-ring"
+                            );
+                            if (successRing) {
+                                successRing.style.zIndex = "1";
+                            }
+
+                            const successLines = popup.querySelectorAll(
+                                ".swal2-success-line-tip, .swal2-success-line-long"
+                            );
+                            successLines.forEach((el) => {
+                                el.style.zIndex = "2";
+                            });
+                        }
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        const select = document.getElementById('swal-select-usuario');
+                        const cedula = select.value;
+                        const rol = select.options[select.selectedIndex].getAttribute('data-rol');
+                        
+                        if (cedula) {
+                            // Confirmar eliminación
+                            Swal.fire({
+                                title: '¿Estás seguro?',
+                                text: 'Esta acción no se puede revertir',
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonText: 'Sí, eliminar',
+                                cancelButtonText: 'Cancelar',
+                                confirmButtonColor: '#dc3545',
+                                cancelButtonColor: '#6c757d',
+                                background: "#fff",
+                                backdrop: "rgba(0,0,0,0.4)",
+                                allowOutsideClick: false, // Evitar cierres accidentales
+                                didOpen: () => {
+                                    const popup = Swal.getPopup();
+                                    const logo = document.createElement("img");
+                                    logo.src = "../../static/img/logo-sena-verde-png-sin-fondo.webp";
+
+                                    // Estilos para el logo
+                                    Object.assign(logo.style, {
+                                        position: "absolute",
+                                        top: "50%",
+                                        left: "50%",
+                                        transform: "translate(-50%, -50%)",
+                                        opacity: "0.2",
+                                        width: "220px",
+                                        pointerEvents: "none",
+                                        zIndex: "0",
+                                    });
+
+                                    // Insertar el logo
+                                    popup.insertBefore(logo, popup.firstChild);
+
+                                    popup
+                                        .querySelectorAll(
+                                            ".swal2-title, .swal2-html-container, .swal2-actions"
+                                        )
+                                        .forEach((el) => (el.style.zIndex = "1"));
+                                }
+                            }).then((confirmResult) => {
+                                if (confirmResult.isConfirmed) {
+                                    // Eliminar usuario usando AJAX
+                                    $.ajax({
+                                        url: 'eliminar_usuario',
+                                        type: 'POST',
+                                        data: {
+                                            cedula: cedula,
+                                            rol: rol
+                                        },
+                                        success: function(response) {
+                                            Swal.fire({
+                                                title: 'Usuario Eliminado',
+                                                text: response.mensaje,
+                                                icon: 'success',
+                                                confirmButtonColor: '#28a745',
+                                                background: "#fff",
+                                                backdrop: "rgba(0,0,0,0.4)",
+                                                didOpen: () => {
+                                                    const popup = Swal.getPopup();
+                                                    const logo = document.createElement("img");
+                                                    logo.src = "../../static/img/logo-sena-verde-png-sin-fondo.webp";
+                                                    
+                                                    Object.assign(logo.style, {
+                                                        position: "absolute",
+                                                        top: "50%",
+                                                        left: "50%",
+                                                        transform: "translate(-50%, -50%)",
+                                                        opacity: "0.2",
+                                                        width: "220px",
+                                                        pointerEvents: "none",
+                                                        zIndex: "0",
+                                                    });
+                                                    
+                                                    popup.insertBefore(logo, popup.firstChild);
+                                                    
+                                                    popup
+                                                        .querySelectorAll(
+                                                            ".swal2-title, .swal2-html-container, .swal2-actions"
+                                                        )
+                                                        .forEach((el) => (el.style.zIndex = "1"));
+                                                }
+                                            }).then(() => {
+                                                // Recargar la página para actualizar la lista de usuarios
+                                                location.reload();
+                                            });
+                                        },
+                                        error: function(xhr) {
+                                            const response = xhr.responseJSON || { mensaje: 'Error al procesar la solicitud' };
+                                            Swal.fire({
+                                                title: 'Error',
+                                                text: response.mensaje,
+                                                icon: 'error',
+                                                confirmButtonColor: '#28a745',
+                                                background: "#fff",
+                                                backdrop: "rgba(0,0,0,0.4)",
+                                                didOpen: () => {
+                                                    const popup = Swal.getPopup();
+                                                    const logo = document.createElement("img");
+                                                    logo.src = "../../static/img/logo-sena-verde-png-sin-fondo.webp";
+                                                    
+                                                    Object.assign(logo.style, {
+                                                        position: "absolute",
+                                                        top: "50%",
+                                                        left: "50%",
+                                                        transform: "translate(-50%, -50%)",
+                                                        opacity: "0.2",
+                                                        width: "220px",
+                                                        pointerEvents: "none",
+                                                        zIndex: "0",
+                                                    });
+                                                    
+                                                    popup.insertBefore(logo, popup.firstChild);
+                                                    
+                                                    popup
+                                                        .querySelectorAll(
+                                                            ".swal2-title, .swal2-html-container, .swal2-actions"
+                                                        )
+                                                        .forEach((el) => (el.style.zIndex = "1"));
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Error',
+                                text: 'Debes seleccionar un usuario',
+                                icon: 'error',
+                                confirmButtonColor: '#28a745',
+                                background: "#fff",
+                                backdrop: "rgba(0,0,0,0.4)",
+                                didOpen: () => {
+                                    const popup = Swal.getPopup();
+                                    const logo = document.createElement("img");
+                                    logo.src = "../../static/img/logo-sena-verde-png-sin-fondo.webp";
+
+                                    // Estilos para el logo
+                                    Object.assign(logo.style, {
+                                        position: "absolute",
+                                        top: "50%",
+                                        left: "50%",
+                                        transform: "translate(-50%, -50%)",
+                                        opacity: "0.2",
+                                        width: "220px",
+                                        pointerEvents: "none",
+                                        zIndex: "0",
+                                    });
+
+                                    // Insertar el logo
+                                    popup.insertBefore(logo, popup.firstChild);
+
+                                    popup
+                                        .querySelectorAll(
+                                            ".swal2-title, .swal2-html-container, .swal2-actions"
+                                        )
+                                        .forEach((el) => (el.style.zIndex = "1"));
+                                }
+                            });
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

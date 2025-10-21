@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Generar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    :root{--green:#1e7e34;}
+    *{box-sizing:border-box}
+    body{
+      margin:0;min-height:100vh;display:flex;justify-content:center;align-items:center;
+      background:#f4f4f4;font-family:Arial,Helvetica,sans-serif;color:#172b4d
+    }
+    button{
+      padding:14px 36px;font-size:16px;border:none;border-radius:10px;background:var(--green);
+      color:#fff;cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,.12);transition:.18s transform,.18s opacity
+    }
+    button:hover{transform:translateY(-1px);opacity:.95}
+
+    .mini-tabla{border-collapse:collapse;width:100%;background:#fff}
+    .mini-tabla th,.mini-tabla td{border:1px solid #cfd8dc;padding:6px 8px;font-size:.9em;text-align:left}
+    .mini-tabla thead th{background:#f1f8e9}
+    .tag{
+      display:inline-block;background:#e8f5e9;border:1px solid #a5d6a7;color:#1b5e20;
+      border-radius:999px;padding:4px 10px;margin:2px 6px 8px 0;font-size:.8em
+    }
+    .card{margin-bottom:16px;padding:12px;border:1px solid #e0e0e0;border-radius:12px;background:#fff}
+    .card h4{margin:0 0 8px 0;font-size:15px}
+    .muted{color:#6b778c}
+    .pager{display:flex;gap:8px;justify-content:center;align-items:center;margin-top:8px}
+    .pager button{padding:8px 14px;background:#0b7c2b;color:#fff;border:none;border-radius:8px;cursor:pointer}
+    .pager .secondary{background:#e0e0e0;color:#222}
+
+    .fold-ctl{cursor:pointer;color:#0b7c2b;text-decoration:underline;font-size:0.92em}
+    .optbar{display:flex;gap:8px;align-items:center;justify-content:flex-end;margin:6px 0 2px}
+    .optbar select,.optbar button{padding:4px 8px;font-size:12px;border-radius:6px;border:1px solid #cfd8dc;background:#fff;cursor:pointer}
+    .optbar .ghost{background:#f5f5f5}
+    .copybtn{background:#eef7ee}
+  </style>
+</head>
+{% include 'nav.html' %}
+<body>
+  <button onclick="generar()">Generar</button>
+
+<script>
+async function generar(){
+  try{
+    const r = await fetch('/procesar_fichas');
+    const data = await r.json();
+    if(!data.success) throw new Error(data.error || 'Error desconocido');
+    const fichas = data.fichas || [];
+    if(fichas.length === 0){
+      Swal.fire('Sin resultados','No hay fichas que cumplan los filtros.','info'); return;
+    }
+    showPager(fichas);
+  }catch(err){
+    Swal.fire('Error', err.message, 'error');
+  }
+}
+
+function showPager(fichas){
+  let idx = 0;
+
+  const buildFichaHtml = (f, pos, total) => {
+    let html = `<div class="card">
+      <h4>Ficha <b>${f.numero_ficha}</b> <span class="muted">— Jornada: ${f.jornada} — Intensidad: ${f.intensidad}</span></h4>`;
+
+    if(!f.propuestas || f.propuestas.length===0){
+      html += `<div class="tag">Sin propuestas para el trimestre</div>`;
+    }else{
+      f.propuestas.forEach((p, gi) => {
+        const rapList = (p.rap_nombres||[]).map(n=>`<li>${escapeHtml(n)}</li>`).join('');
+        html += `
+          <div class="tag">
+            <b>${escapeHtml(p.comp_nombre||'')}</b> | <b>${escapeHtml(p.perfil_nombre||'')}</b>
+            &nbsp;•&nbsp; Total: ${p.total_horas}h → ${p.horas_semana} h/sem
+          </div>
+          ${rapList ? `<div style="margin:6px 0 2px 0;font-weight:600">RAPs del grupo</div>
+                       <ul style="margin:4px 0 8px 18px">${rapList}</ul>` : ''}
+
+          <div class="optbar">
+            <span class="fold-ctl" data-fold="grp${gi}">mostrar / ocultar</span>
+            <span class="muted" style="margin-left:auto;">Opciones por página:</span>
+            <select data-pagesize="grp${gi}">
+              <option>10</option><option selected>15</option><option>20</option>
+            </select>
+            <button class="ghost" data-prev="grp${gi}">◀</button>
+            <span class="muted" id="pageinfo-${gi}"></span>
+            <button class="ghost" data-next="grp${gi}">▶</button>
+          </div>
+
+          <div id="group-${gi}" style="display:block"></div>
+        `;
+      });
+    }
+
+    html += `</div>
+             <div class="pager">
+               <button id="prev" class="secondary" ${pos===0?'disabled':''}>Anterior</button>
+               <span class="muted">${pos+1} / ${total}</span>
+               <button id="next" class="secondary" ${pos===total-1?'disabled':''}>Siguiente</button>
+               <button id="close">Cerrar</button>
+             </div>`;
+    return html;
+  };
+
+  const render = () => {
+    const f = fichas[idx];
+    Swal.fire({
+      title: `Posibles distribuciones — Ficha ${f.numero_ficha}`,
+      width: 950,
+      html: buildFichaHtml(f, idx, fichas.length),
+      showConfirmButton: false,
+      didRender: () => {
+        // 1) Navegación entre fichas
+        const prev = document.getElementById('prev');
+        const next = document.getElementById('next');
+        const close = document.getElementById('close');
+        if(prev) prev.onclick = () => { if(idx>0){ idx--; render(); } };
+        if(next) next.onclick = () => { if(idx<fichas.length-1){ idx++; render(); } };
+        if(close) close.onclick = () => Swal.close();
+
+        // 2) Inicializar grupos (AHORA, dentro del didRender)
+        window.__groups = {}; // reiniciar por ficha
+        (f.propuestas || []).forEach((p, gi) => {
+          const key = `grp${gi}`;
+          window.__groups[key] = {
+            ops: p.opciones || [],
+            page: 0,
+            size: 15,
+            containerId: `group-${gi}`,
+            pageInfoId: `pageinfo-${gi}`
+          };
+        });
+
+        // 3) Activar plegado, paginación y render de grupos
+        attachGroups();
+      }
+    });
+  };
+
+  render();
+}
+
+/* ====== Helpers de grupos (paginación simple por grupo) ====== */
+function attachGroups(){
+  if(!window.__groups) return;
+
+  Object.keys(window.__groups).forEach((key) => {
+    const g = window.__groups[key];
+    const foldCtl = document.querySelector(`[data-fold="${key}"]`);
+    const prevBtn = document.querySelector(`[data-prev="${key}"]`);
+    const nextBtn = document.querySelector(`[data-next="${key}"]`);
+    const selSize = document.querySelector(`[data-pagesize="${key}"]`);
+    const cont = document.getElementById(g.containerId);
+    const pageInfo = document.getElementById(g.pageInfoId);
+
+    if(!cont) return;
+
+    const renderPage = () => {
+      const total = g.ops.length;
+      const pages = Math.max(1, Math.ceil(total / g.size));
+      g.page = Math.min(Math.max(0, g.page), pages-1);
+      const ini = g.page * g.size, fin = Math.min(total, ini + g.size);
+      if(pageInfo) pageInfo.textContent = ` ${ini+1}–${fin} de ${total} (pág. ${g.page+1}/${pages})`;
+
+      let html = '';
+      for(let k=ini; k<fin; k++){
+        const op = g.ops[k];
+        // mostrar número de opción + tabla resumida (sin repetir título largo)
+        const rows = (op.slots||[]).map(s =>
+          `<tr><td>${s.dia}</td><td>${s.desde}–${s.hasta}</td></tr>`
+        ).join('');
+
+        html += `
+          <div class="card">
+            <div class="optbar">
+              <b>Opción ${k+1}</b>
+              <button class="copybtn" data-copy="${key}-${k}" style="margin-left:auto;">Copiar</button>
+            </div>
+            <table class="mini-tabla">
+              <thead><tr><th>Día</th><th>Bloque</th></tr></thead>
+              <tbody>${rows}</tbody>
+            </table>
+          </div>`;
+      }
+      cont.innerHTML = html;
+
+      // botones copiar
+      cont.querySelectorAll("[data-copy]").forEach(btn=>{
+        btn.onclick = () => {
+          const [, oi] = btn.dataset.copy.split("-"); // key-idx
+          const op = g.ops[parseInt(oi,10)];
+          const text = (op.slots||[]).map(s => `${s.dia} ${s.desde}-${s.hasta}`).join(" | ");
+          navigator.clipboard.writeText(text).then(()=> {
+            Swal.fire({toast:true, position:'top', timer:1200, showConfirmButton:false, icon:'success', title:'Copiado'});
+          });
+        };
+      });
+    };
+
+    // plegado
+    if(foldCtl && cont){
+      foldCtl.onclick = () => {
+        cont.style.display = (cont.style.display==='none'?'block':'none');
+      };
+    }
+    // paginación
+    if(prevBtn) prevBtn.onclick = () => { g.page--; renderPage(); };
+    if(nextBtn) nextBtn.onclick = () => { g.page++; renderPage(); };
+    if(selSize){
+      selSize.onchange = () => { g.size = parseInt(selSize.value,10)||15; g.page = 0; renderPage(); };
+      g.size = parseInt(selSize.value,10)||15;
+    }
+    renderPage();
+  });
+}
+
+// helper para evitar inyección en textos de BD
+function escapeHtml(str){
+  if(typeof str !== 'string') return str;
+  return str.replaceAll('&','&amp;').replaceAll('<','&lt;')
+            .replaceAll('>','&gt;').replaceAll('"','&quot;')
+            .replaceAll("'",'&#39;');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../static/css/nene.css" />
+    <title>Registro de Mallas</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="../static/img/xx_modified-removebg-preview.png">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"
+    />
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="../static/sweetalert2/dist/sweetalert2.min.css"
+    />
+    <!-- <script src="../static/sweetalert2.all.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    {% include 'nav.html' %}
+  </head>
+
+  <body>
+
+    <div id="paginacion" class="paginacion">
+      <h2 id="titulo-trimestre"></h2>
+    </div>
+
+    <div id="form-container" class="form-container">
+      <div class="label">
+        <label for="">Ficha:</label>
+        <span></span> <!-- Aquí se mostrará el programa -->
+        <span></span> <!-- Aquí se mostrará el nombre -->
+      </div>
+      
+
+      <div class="row1">
+        <label for="competencia">Competencia</label>
+        <select
+          class="js-example-basic-single"
+          name="competencia"
+          id="competencia"
+        >
+          <option value=""></option>
+        </select>
+      </div>
+      <div class="row1-1">
+        <label for="rap">Rap</label>
+        <select
+          id="rap"
+          class="js-example-basic-single"
+          name="rap"
+          multiple="multiple"
+          size="10"
+        >
+          <option value=""></option>
+        </select>
+      </div>
+
+      <div class="row2">
+        <label for="horas">Horas de ejecución:</label>
+        <input type="number" id="horas" min="22" step="11" />
+
+        <button id="asociar-btn">Asociar</button>
+      </div>
+
+      <div class="tituloTablas">
+        <label for="horasT">Total Horas Trimestre:</label>
+        <span></span>
+      </div>
+
+      <table id="resultados" class="display">
+        <thead>
+          <tr>
+            <th>Competencia</th>
+            <th>RAP 1</th>
+            <th>RAP 2</th>
+            <th>RAP 3</th>
+            <th>RAP 4</th>
+            <th>Horas de Ejecución</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Aquí se agregarán las filas dinámicamente -->
+        </tbody>
+      </table>
+    </div>
+
+    <script src="../static/js/nene.js"></script>
+  </body>
+</html>

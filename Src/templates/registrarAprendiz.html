@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Registrar Aprendices</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../static/css/registrarAprendiz.css">
+  {% include 'nav.html' %}
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Registrar Aprendices</h1>
+    <!-- Formulario para subir el archivo Excel -->
+    <form id="upload-form" enctype="multipart/form-data">
+      <div class="file-upload-container">
+        <span>Selecciona un archivo de Juicios Evaluativos</span>
+        <label for="file-input" class="file-label">Seleccionar archivo</label>
+        <input type="file" id="file-input" name="excel_file" required />
+        <span id="file-selected">Sin archivos seleccionados</span>
+      </div>
+      <button class="analyze-button" type="submit">ANALIZAR</button>
+    </form>    
+  </div>
+  <script src="../static/js/registrarAprendiz.js"></script>
+</body>
+</html>

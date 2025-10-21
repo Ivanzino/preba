@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registro de Trimestres</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="icon" href="../static/img/xx_modified-removebg-preview.png">
+  <!-- SweetAlert2 CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  <link rel="stylesheet" href="../static/css/../css/trimestresAño.css">
+  {% include 'nav.html' %}
+</head>
+<body>
+  <div class="container">
+    <h1>Crear Trimestres Calendario Académico</h1>
+    <form id="mainForm" method="POST" action="{{ url_for('trimestresAño.trimestresAño') }}">
+      <!-- Selección de trimestres del año -->
+      <div class="mb-3">
+        <label for="trimestres" class="form-label">Trimestre del Año</label>
+        <select class="form-select" id="trimestres" name="trimestres" required>
+          <option value="1">1° Trimestre</option>
+          <option value="2">2° Trimestre</option>
+          <option value="3">3° Trimestre</option>
+          <option value="4">4° Trimestre</option>
+        </select>
+      </div>
+      <!-- Fechas lado a lado -->
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="fechaInicio" class="form-label">Fecha Inicio del Trimestre</label>
+          <input type="date" class="form-control" id="fechaInicio" name="fechaInicio" required>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="fechaFin" class="form-label">Fecha Fin del Trimestre</label>
+          <input type="date" class="form-control" id="fechaFin" name="fechaFin" required>
+        </div>
+      </div>
+      <!-- Botón crear -->
+      <button type="submit" class="btn btn-custom w-100">Crear Calendario</button>
+    </form>
+  </div>
+  
+  <!-- SweetAlert2 y Bootstrap Bundle JS -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- Variables globales para el modal -->
+  {% if show_modal %}
+  <script>
+    // Configuración del modal
+    window.modalConfig = {
+      showModal: true,
+      selectedTrimestre: "{{ trimestre_año }}",
+      mainFechaInicioStr: "{{ fechaInicio }}",
+      modalHTML: `
+        <form id="confirmForm" method="POST" action="{{ url_for('trimestresAño.confirmarTrimestres') }}">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Ficha</th>
+                <th>Programa</th>
+                <th>Jornada</th>
+                <th>Trimestre de la Ficha</th>
+                <th>Fecha Inicio</th>
+                <th>Fecha Fin</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for ficha in fichas_procesadas %}
+              <tr>
+                <!-- Input hidden para el id_trimestre con el trimestre real de la ficha -->
+                <input type="hidden" name="id_trimestre[]" value="{{ (secuencia + loop.index0) }}_{{ current_year }}_{{ ficha.trimestre_real }}">
+                <td>
+                  <input type="hidden" name="numero_ficha[]" value="{{ ficha.numero_ficha }}">
+                  {{ ficha.numero_ficha }}
+                </td>
+                <td>{{ ficha.nombre_programa }}</td>
+                <td>{{ ficha.jornada }}</td>
+                <td class="text-center">
+                  <span class="badge bg-info">{{ ficha.trimestre_real }}°</span>
+                  <small class="d-block text-muted">
+                    (de {{ ficha.cant_trimestres }} trimestres)
+                  </small>
+                </td>
+                <td>
+                  <input type="date" name="fecha_inicio[]" value="{{ fechaInicio }}" class="form-control" required>
+                </td>
+                <td>
+                  <input type="date" name="fecha_fin[]" value="{{ fechaFin }}" class="form-control" required>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </form>
+      `
+    };
+  </script>
+  {% else %}
+  <script>
+    window.modalConfig = {
+      showModal: false
+    };
+  </script>
+  {% endif %}
+  
+  <!-- Script principal -->
+  <script src="../static/js/trimestresAño.js"></script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!-- templates/preview_instructors.html -->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <title>Vista Previa de Instructores</title>
+</head>
+
+<body>
+    <span class="close-preview"
+        onclick="document.getElementById('previewContainer').style.display='none'">&times;</span>
+    <h1>Vista Previa de Instructores</h1>
+    <form id="instructorsForm" method="POST" action="{{ url_for('upload_excel.insert_instructors') }}">
+        <table id="instructorsTable">
+            <thead>
+                <tr>
+                    <th>Cédula</th>
+                    <th>Nombres y Apellidos</th>
+                    <th>Perfil</th>
+                    <th>Vínculo</th>
+                    <th>Teléfono</th>
+                    <th>Correo Electrónico</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for instructor in instructors %}
+                <tr>
+                    <td>
+                        <input type="hidden" name="cedula[]" value="{{ instructor.cedula }}">
+                        {{ instructor.cedula }}
+                    </td>
+                    <td>
+                        <input type="hidden" name="nombre[]" value="{{ instructor.nombre }}">
+                        {{ instructor.nombre }}
+                    </td>
+                    <td>
+                        <input type="hidden" name="perfil[]" value="{{ instructor.perfil }}">
+                        {{ instructor.perfil }}
+                    </td>
+                    <td>
+                        <input type="hidden" name="vinculo[]" value="{{ instructor.vinculo }}">
+                        {{ instructor.vinculo }}
+                    </td>
+                    <td>
+                        <input type="hidden" name="telefono[]" value="{{ instructor.telefono }}">
+                        {{ instructor.telefono }}
+                    </td>
+                    <td>
+                        <input type="hidden" name="correo[]" value="{{ instructor.correo }}">
+                        {{ instructor.correo }}
+                    </td>
+                    <td>
+                        <button type="button" class="delete-row">Eliminar</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br>
+        <div class="enviar_caja">
+            <button id="boton_envio" type="submit">Confirmar inserción</button>
+        </div>
+    </form>
+</body>
+
+</html>

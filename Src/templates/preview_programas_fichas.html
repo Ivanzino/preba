@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Programas y Fichas</title>
+    <link rel="icon" href="../static/img/xx_modified-removebg-preview.png">
+
+    <!-- CSS personalizados -->
+    <link rel="stylesheet" href="../static/css/programas_modals.css" />
+
+    <!-- Bootstrap, DataTables, Select2, Icons -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.2/css/dataTables.bootstrap5.css" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+    {% include 'nav.html' %}
+
+    <div class="container my-5">
+        <!-- Programas -->
+        <h2>Programas</h2>
+        <table id="table-programas" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Código</th>
+                    <th>Nombre del Programa</th>
+                    <th>Sigla</th>
+                    <th>Trimestres</th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for prog in programas %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ prog.id_prog }}</td>
+                    <td>{{ prog.nombre }}</td>
+                    <td>{{ prog.sigla }}</td>
+                    <td>{{ prog.cant_trimestres }}</td>
+                    <td>
+                        <i class="bi bi-eye text-primary btn-view-fichas" style="cursor:pointer;" title="Ver Fichas"
+                            data-program-id="{{ prog.id_prog }}"></i>
+                        <i class="bi bi-pencil-square text-warning btn-edit-program" style="cursor:pointer;"
+                            title="Editar Programa" data-bs-toggle="modal" data-bs-target="#modal-edit-program"
+                            data-program-id="{{ prog.id_prog }}"></i>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6" class="text-center">No hay programas para mostrar 😕</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Fichas -->
+        <div id="fichas-section" style="display:none;">
+            <h2 class="mt-5">Fichas del Programa</h2>
+            <table id="table-fichas" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Ficha</th>
+                        <th>Programa</th>
+                        <th>Jornada</th>
+                        <th>Sede</th>
+                        <th>Inicio Lectiva</th>
+                        <th>Fin Lectiva</th>
+                        <th>Inicio Inducción</th>
+                        <th>Fin Inducción</th>
+                        <th>Instructor</th>
+                        <th>Intensidad</th>
+                        <th>Modalidad</th>
+                        <th>Oferta</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for f in fichas %}
+                    <tr data-program-id="{{ f.programa }}" data-modalidad="{{ f.modalidad }}"
+                        data-oferta="{{ f.oferta }}" style="display:none;">
+                        <td>{{ loop.index }}</td>
+                        <td>{{ f.numero_ficha }}</td>
+                        <td>{{ f.programa }}</td>
+                        <td>{{ f.jornada }}</td>
+                        <td>{{ f.codigo_sede }}</td>
+                        <td>{{ f.fecha_inicio_lectiva }}</td>
+                        <td>{{ f.fecha_fin_lectiva }}</td>
+                        <td>{{ f.fecha_inicio_induccion }}</td>
+                        <td>{{ f.fecha_fin_induccion }}</td>
+                        <td>{{ f.id_instructor }}</td>
+                        <td>{{ f.intensidad }}</td>
+                        <td>{{ 'Presencial' if f.modalidad == 1 else 'Virtual' }}</td>
+                        <td>{{ 'Abierta' if f.oferta == 0 else 'Cerrada' }}</td>
+
+                        <td>
+                            <i class="bi bi-pencil-square text-warning btn-edit-ficha" style="cursor:pointer;"
+                                title="Editar Ficha" data-bs-toggle="modal" data-bs-target="#modal-edit-ficha"
+                                data-ficha-id="{{ f.numero_ficha }}"></i>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal Editar Programa -->
+    <div class="modal fade" id="modal-edit-program" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-md modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar Programa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="form-edit-program">
+                    <div class="modal-body">
+                        <input type="hidden" id="edit-id_prog" name="id_prog" />
+                        <div class="mb-3">
+                            <label for="edit-nombre" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="edit-nombre" name="nombre" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-sigla" class="form-label">Sigla</label>
+                            <input type="text" class="form-control" id="edit-sigla" name="sigla" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-trimestres" class="form-label">Trimestres</label>
+                            <input type="number" class="form-control" id="edit-trimestres" name="cant_trimestres"
+                                required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Editar Ficha -->
+    <div class="modal fade" id="modal-edit-ficha" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar Ficha</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="form-edit-ficha">
+                    <div class="modal-body">
+                        <input type="hidden" id="edit-numero_ficha" name="numero_ficha" />
+                        <div class="mb-3">
+                            <label for="edit-jornada" class="form-label">Jornada</label>
+                            <input type="text" class="form-control" id="edit-jornada" name="jornada" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-codigo_sede" class="form-label">Código Sede</label>
+                            <input type="text" class="form-control" id="edit-codigo_sede" name="codigo_sede" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-fecha_inicio_lectiva" class="form-label">Inicio Lectiva</label>
+                            <input type="date" class="form-control" id="edit-fecha_inicio_lectiva"
+                                name="fecha_inicio_lectiva" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-fecha_fin_lectiva" class="form-label">Fin Lectiva</label>
+                            <input type="date" class="form-control" id="edit-fecha_fin_lectiva" name="fecha_fin_lectiva"
+                                required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-fecha_inicio_induccion" class="form-label">Inicio Inducción</label>
+                            <input type="date" class="form-control" id="edit-fecha_inicio_induccion"
+                                name="fecha_inicio_induccion" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-fecha_fin_induccion" class="form-label">Fin Inducción</label>
+                            <input type="date" class="form-control" id="edit-fecha_fin_induccion"
+                                name="fecha_fin_induccion" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-id_instructor" class="form-label">Instructor (ID)</label>
+                            <input type="number" class="form-control" id="edit-id_instructor" name="id_instructor"
+                                required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-intensidad" class="form-label">Intensidad (horas)</label>
+                            <input type="number" class="form-control" id="edit-intensidad" name="intensidad" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-modalidad" class="form-label">Modalidad</label>
+                            <select id="edit-modalidad" name="modalidad" class="form-select" required>
+                                <option value="0">Virtual</option>
+                                <option value="1">Presencial</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-oferta" class="form-label">Oferta</label>
+                            <select id="edit-oferta" name="oferta" class="form-select" required>
+                                <option value="0">Abierta</option>
+                                <option value="1">Cerrada</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-lider" class="form-label">Líder de Ficha</label>
+                            <select id="edit-lider" name="lider" class="form-select" required>
+                                <!-- Opciones dinámicas de instructores -->
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/2.1.2/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.1.2/js/dataTables.bootstrap5.js"></script>
+    <script src="../static/js/preview_programas_fichas.js"></script>
+</body>
+
+</html>

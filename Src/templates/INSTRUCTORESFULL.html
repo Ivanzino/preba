@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="es">
+<!-- modo dark = data-bs-theme="dark" -->
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Instructores</title>
+  <link rel="icon" href="../static/img/xx_modified-removebg-preview.png">
+  <!-- Estilos CSS -->
+  <link rel="stylesheet" href="../static/css/INSTRUCTORESFULL.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+  <!-- Estilos DataTables y Bootstrap -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.1.2/css/dataTables.bootstrap5.css" />
+
+  <!-- Fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+
+  <!-- Estilo Select2 -->
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+  <!-- Estilo personalizado adicional -->
+  <link rel="stylesheet" href="../static/css/interfazmarlovyella.css" />
+
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+
+<body>
+  {% include 'nav.html' %}
+  <!-- Botón para el individual -->
+  <div class="botones-new">
+    <button class="boton_nuevo" id="boton_nuevo">Nuevo</button>
+  </div>
+
+  <!-- Botón para el masivo -->
+  <div class="botones-new2">
+    <button class="boton_nuevo" id="boton_masivo">Masivo</button>
+  </div>
+  
+  <!-- Registro Masivo -->
+  <form id="uploadForm" action="/upload-excel" method="post" enctype="multipart/form-data">
+    <div class="caja_total">
+      <!-- Modal para carga masiva -->
+      <div id="masivo" class="modal">
+        <div class="modal-content">
+          <!-- Botón de cierre con id único -->
+          <span id="closeMasivo" class="close">&times;</span>
+          <h2>Registro Masivo Instructor</h2>
+          <p>Cargar Archivo Excel</p>
+          <div class="container-btn-file">
+            <label for="file">
+              <svg fill="#fff" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 50 50">
+                <path d="M28.8125 .03125L.8125 5.34375C.339844 5.433594 0 5.863281 0 6.34375L0 43.65625C0 44.136719 .339844 44.566406 .8125 44.65625L28.8125 49.96875C28.875 49.980469 28.9375 50 29 50C29.230469 50 29.445313 49.929688 29.625 49.78125C29.855469 49.589844 30 49.296875 30 49L30 1C30 .703125 29.855469 .410156 29.625 .21875C29.394531 .0273438 29.105469 -.0234375 28.8125 .03125ZM32 6L32 13L34 13L34 15L32 15L32 20L34 20L34 22L32 22L32 27L34 27L34 29L32 29L32 35L34 35L34 37L32 37L32 44L47 44C48.101563 44 49 43.101563 49 42L49 8C49 6.898438 48.101563 6 47 6ZM36 13L44 13L44 15L36 15ZM6.6875 15.6875L11.8125 15.6875L14.5 21.28125C14.710938 21.722656 14.898438 22.265625 15.0625 22.875L15.09375 22.875C15.199219 22.511719 15.402344 21.941406 15.6875 21.21875L18.65625 15.6875L23.34375 15.6875L17.75 24.9375L23.5 34.375L18.53125 34.375L15.28125 28.28125C15.160156 28.054688 15.035156 27.636719 14.90625 27.03125L14.875 27.03125C14.8125 27.316406 14.664063 27.761719 14.4375 28.34375L11.1875 34.375L6.1875 34.375L12.15625 25.03125ZM36 20L44 20L44 22L36 22ZM36 27L44 27L44 29L36 29ZM36 35L44 35L44 37L36 37Z"></path>
+              </svg>
+              Cargar Excel
+            </label>
+            <!-- Input file oculto -->
+            <input id="file" class="file" name="file" type="file" accept=".xlsx, .xls" required />
+          </div>
+          <label id="file-label" for="file">Ningún Archivo Seleccionado</label>
+          <div class="enviar_caja">
+            <button class="boton" id="boton_envio" type="submit">Enviar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <!-- Modal_tabla para revision temporal de instructores masivo -->
+  <div id="previewContainer">
+    <div class="modal-contentt" id="previewContainer">
+      <!-- Se cambió el id a "closeRevision" para no duplicar el id "close" -->
+      <span id="closeRevision" class="close">&times;</span>
+      <h2>Revision de Instructores</h2>
+      <p>Revision de Instructores</p>
+    </div>
+  </div>
+
+  <!-- (El resto del HTML permanece sin cambios) -->
+  <!-- Formulario de Registro (Nuevo Instructor) -->
+  <div class="caja_nuevo" id="caja_nuevo">
+    <div class="contenedor1">
+      <form id="registro-form" action="/registrar" method="post">
+        <span class="close3" id="close3">&times;</span>
+        <h3 id="titulos-prim">Registrar Instructor</h3>
+        <div class="probar">
+          <div class="labelselect2">
+            <label for="cedula">Cédula del Instructor:</label>
+            <input type="number" id="cedula" name="cedula" placeholder="Ej: 1096801877" required />
+          </div>
+          <div class="labelselect2">
+            <label for="nombre">Nombre Completo:</label>
+            <input name="nombre" type="text" id="nombre" placeholder="Ej: Lucdovina Herrea Fúnez" required />
+          </div>
+        </div>
+        <div class="probar">
+          <div class="labelselect2">
+            <label for="correo">Correo electrónico:</label>
+            <input name="correo" type="email" id="correo" placeholder="Ej: ejemplo@gmail.com" required />
+          </div>
+          <div class="labelselect2">
+            <label for="telefono">Teléfono:</label>
+            <input name="telefono" type="number" id="telefono" placeholder="Ej: 3112345678" required />
+          </div>
+        </div>
+        <div class="probar">
+          <div class="labelselect2">
+            <label for="titulosCarreras">Perfil del Instructor:</label>
+            <select name="perfiles" id="titulosCarreras">
+              <option value="select">Seleccionar</option>
+              {% for perfil in perfiles %}
+              <option value="{{ perfil[0] }}">{{ perfil[1] }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="labelselect2">
+            <label for="vinculo">Vínculo del instructor:</label>
+            <select name="vinculo" id="vinculo">
+              <option value="X">Seleccionar</option>
+              <option value="Funcionario">Funcionario</option>
+              <option value="Contratista">Contratista</option>
+            </select>
+          </div>
+        </div>
+        <div class="labelselect2 migueljaimes">
+          <!-- Se cambió el name a "centros" para que coincida con el endpoint -->
+          <label for="formacion5">Centro de Formación:</label>
+          <select name="centros" id="formacion5" required>
+              {% if nombre_centro_usuario %}
+                  <option value="{{ nombre_centro_usuario[0] }}" selected>
+                      {{ nombre_centro_usuario[1] }}
+                  </option>
+              {% endif %}
+    
+              {% for centro in centros_disponibles %}
+                  {% if centro[0] != nombre_centro_usuario[0] %}
+                      <option value="{{ centro[0] }}">{{ centro[1] }}</option>
+                  {% endif %}
+              {% endfor %}
+          </select>
+        </div>
+        <div class="registrar">
+          <button type="submit" class="boton" id="registrar" onclick="showAlert()">Registrar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal de Actualización -->
+<!-- modalActualizacion.html (fragmento) -->
+<div id="modalActualizacion" class="modal">
+  <div class="modal-content-2">
+    <span class="close-2">&times;</span>
+    <h2 id="titulos-prim">Actualiza tu información</h2>
+
+    <form id="registro-form2">
+      <div class="probar">
+        <div class="labelselect2">
+          <label for="cedula2">Cédula del Instructor:</label>
+          <input type="number" id="cedula2" name="cedula2" readonly />
+        </div>
+
+        <div class="labelselect2">
+          <label for="nombre2">Nombre Completo:</label>
+          <input type="text" id="nombre_actualizado" required />
+        </div>
+      </div>
+
+      <div class="probar">
+        <div class="labelselect2">
+          <label for="correo2">Correo electrónico:</label>
+          <input type="email" id="correo_actualizado" placeholder="Ej: ejemplo@gmail.com" required />
+        </div>
+
+        <div class="labelselect2">
+          <label for="telefono2">Teléfono:</label>
+          <input type="number" id="telefono_actualizado" placeholder="Ej: 3112345678"/>
+        </div>
+      </div>
+
+      <!-- Aquí los dos selects lado a lado: Centro de Formación y Vínculo -->
+      <div class="probar">
+        <div class="labelselect2 migueljaimes">
+          <label for="formacion3">Centro de Formación:</label>
+          <select name="centros" id="formacion3" required>
+            <option value="select">Seleccionar</option>
+            <!-- Opciones serán cargadas con JavaScript -->
+          </select>
+        </div>
+
+        <div class="labelselect2">
+          <label for="vinculo2">Vínculo del instructor:</label>
+          <select name="vinculo2" id="vinculo2" required>
+            <option value="select">Seleccionar</option>
+            <!-- Opciones serán cargadas con JavaScript -->
+          </select>
+        </div>
+      </div>
+
+      <div class="registrar">
+        <button type="button" class="boton" id="registrar" onclick="actualizarInstructor()">Registrar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+  <!-- Modal de Competencias -->
+  <div id="modalCompetencias" class="modal">
+    <div class="modal-content">
+      <span  class="close">&times;</span>
+      <h2>Asociar Competencias</h2>
+      <div class="container-content">
+        <div class="conteiner-table">
+          <label for="asociar">Buscar Competencias</label>
+          <select id="asociar" class="tamaño-cli-2">
+            <option></option>
+            <!-- Placeholder -->
+            <option value="programacion-basica">Programación Básica</option>
+            <option value="desarrollo-web">Desarrollo Web</option>
+            <option value="analisis-de-datos">Análisis de Datos</option>
+            <option value="bases-de-datos">Bases de Datos</option>
+            <option value="diseño-grafico">Diseño Gráfico</option>
+            <option value="seguridad-informatica">Seguridad Informática</option>
+            <option value="gestion-de-proyectos">Gestión de Proyectos</option>
+            <option value="logistica">Logística</option>
+          </select>
+          <button class="boton" id="añadir">Asociar</button>
+          <table id="Mytables" class="table table-striped" style="width: 100%">
+            <thead>
+              <tr>
+                <th>Código</th>
+                <th>Competencias Asociadas</th>
+                <th>Opciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2824078</td>
+                <td>Análisis y Desarrollo de Software</td>
+                <td><i class="bi bi-trash btn-eliminar"></i></td>
+              </tr>
+              <tr>
+                <td>2824079</td>
+                <td>Desarrollo Web</td>
+                <td><i class="bi bi-trash btn-eliminar"></i></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Calendario (Modal) -->
+  <div class="calendario_caja" id="calendario_caja">
+    <div class="contenedor_calendario">
+      <span class="close5" id="close5">&times;</span>
+      <!-- Mostrar el nombre de la persona -->
+      <h4 id="title-agenda">
+        Agenda de <span id="nombreInstructorAgenda"></span>
+      </h4>
+      <!-- Fila con 3 campos + botón al lado -->
+      <div class="probar2" style="display: flex; gap: 1rem; align-items: flex-end; justify-content: center;">
+        <div class="labelselect2">
+          <label for="fecha">Día:</label>
+          <select id="fecha" required>
+            <option>Lunes</option>
+            <option>Martes</option>
+            <option>Miércoles</option>
+            <option>Jueves</option>
+            <option>Viernes</option>
+            <option>Sábado</option>
+            <option>Domingo</option>
+          </select>
+        </div>
+        <div class="labelselect2">
+          <label for="horainicio">Hora de Inicio:</label>
+          <input type="time" id="horainicio" required />
+        </div>
+        <div class="labelselect2">
+          <label for="horafin">Hora de Fin:</label>
+          <input type="time" id="horafin" required />
+        </div>
+        <div class="labelselect2">
+          <button class="boton" id="registrarAgenda">Registrar</button>
+        </div>
+        <div class="labelselect2">
+          <button class="boton" id="btnExtras">Extras</button>
+        </div>
+      </div>
+      <table id="agenda" class="table table-striped" style="width: 100%">
+        <thead>
+          <tr>
+            <th>Día</th>
+            <th>Hora de Inicio</th>
+            <th>Hora de Fin</th>
+            <th>Opciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Se llenará dinámicamente con JS -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- NUEVO: Modal para Editar un registro de la agenda -->
+  <div class="modal" id="modalEditarAgenda">
+    <div class="modal-content">
+      <span class="close" id="closeEditarAgenda">&times;</span>
+      <h3>Editar Agenda</h3>
+      <div class="labelselect2">
+        <label for="editDia">Día:</label>
+        <select id="editDia">
+          <option>Lunes</option>
+          <option>Martes</option>
+          <option>Miércoles</option>
+          <option>Jueves</option>
+          <option>Viernes</option>
+          <option>Sábado</option>
+          <option>Domingo</option>
+        </select>
+      </div>
+      <div class="labelselect2">
+        <label for="editHoraInicio">Hora Inicio:</label>
+        <input type="time" id="editHoraInicio" />
+      </div>
+      <div class="labelselect2">
+        <label for="editHoraFin">Hora Fin:</label>
+        <input type="time" id="editHoraFin" />
+      </div>
+      <button class="boton" id="btnGuardarAgenda">Guardar</button>
+    </div>
+  </div>
+
+  <!-- Tabla de Instructores -->
+  <div class="container mt-5">
+    <table id="tec-serv" class="table table-striped" style="width: 100%">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Cédula</th>
+          <th>Nombre</th>
+          <th>Centro de Formación</th>
+          <th>Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if datos_instructores %}
+          {% for dato in datos_instructores %}
+            {% set codigo_centro_instructor = dato[2] %}
+            <tr>
+              <td>{{ loop.index }}</td>
+              <td>{{ dato[0] }}</td>
+              <td>{{ dato[1] }}</td>
+              <td>{{ dato[3] }}</td>
+              <td>
+                <!-- Botón existente para editar -->
+                <button class="btn-detalle" data-cedula="{{ dato[0] }}" {% if codigo_centro_instructor != codigo_centro_usuario and dato[3] != "Sin centro Vinculado" %}hidden{% endif %}>
+                  <i class="bi bi-pencil-square" data-bs-toggle="tooltip" data-bs-placement="top" title="Actualizar Informacion"></i>
+                </button>
+                
+                <!-- NUEVO: Botón para vincular instructor a centro -->
+                <button class="btn-vincular" data-cedula="{{ dato[0] }}" data-nombre="{{ dato[1] }}" 
+                  {% if dato[3] != "Sin centro Vinculado" and dato[3] != "Sin centro Asociado" %}hidden{% endif %}>
+                  <i class="bi bi-link" data-bs-toggle="tooltip" data-bs-placement="top" title="Vincular Centro"></i>
+                </button>
+                
+                <!-- Botones restantes -->
+                <button class="btn-editar" data-cedula="{{ dato[0] }}" {% if codigo_centro_instructor != codigo_centro_usuario %}hidden{% endif %}>
+                  <i class="bi bi-journal-text" data-bs-toggle="tooltip" data-bs-placement="top" title="Competencias Asociadas"></i>
+                </button>
+                <button class="btn-calendario" data-cedula="{{ dato[0] }}" data-nombre="{{ dato[1] }}" {% if codigo_centro_instructor != codigo_centro_usuario %}hidden{% endif %}>
+                  <i class="bi bi-calendar-date" data-bs-toggle="tooltip" data-bs-placement="top" title="Agenda Instructor"></i>
+                </button>
+                <button class="btn-perfiles" data-cedula="{{ dato[0] }}" data-nombre="{{ dato[1] }}" {% if codigo_centro_instructor != codigo_centro_usuario %}hidden{% endif %}>
+                  <i class="bi bi-person-badge" data-bs-toggle="tooltip" data-bs-placement="top" title="Gestionar Perfiles"></i>
+                </button>
+                <button class="btn-desvincular" data-cedula="{{ dato[0] }}" data-nombre="{{ dato[1] }}" {% if codigo_centro_instructor != codigo_centro_usuario %}hidden{% endif %}>
+                  <i class="bi bi-vinyl-fill" data-bs-toggle="tooltip" data-bs-placement="top" title="Desvincular Centro"></i>
+                </button>
+              </td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td colspan="5" class="text-center">No se encontraron instructores.</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Scripts JS -->
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- Select2 -->
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  <!-- Bootstrap Bundle -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <!-- DataTables -->
+  <script src="https://cdn.datatables.net/2.1.2/js/dataTables.js"></script>
+  <script src="https://cdn.datatables.net/2.1.2/js/dataTables.bootstrap5.js"></script>
+  <!-- Script personalizado -->
+  <script src="../static/js/INSTRUCTORESFULL.js"></script>
+
+  <!-- Inicialización de Select2 -->
+  <script>
+    $(document).ready(function () {
+      $("#formacion, #titulosCarreras, #titulosCarreras2, #asociar").select2({
+        placeholder: "Seleccionar",
+        allowClear: true,
+      });
+    });
+  </script>
+  <script>
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+  </script>
+</body>
+</html>

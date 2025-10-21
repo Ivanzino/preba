@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Generar comprobación de fichas</title>
+
+  <!-- SweetAlert2 CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- Estilos -->
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f5f7fa;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card {
+      background: white;
+      padding: 22px;
+      border-radius: 10px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+      width: 520px;
+      max-width: 92%;
+      text-align: center;
+    }
+    h1 { font-size: 20px; margin: 0 0 12px; }
+    p { color: #444; margin: 0 0 18px; }
+    #btn-generar {
+      background: #2b8cff;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+    #btn-generar:disabled { opacity: .6; cursor: not-allowed; }
+    .small { font-size: 13px; color: #666; margin-top: 10px; }
+    
+    .ficha-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      margin: 6px 0;
+      background: #f8f9fa;
+      border-radius: 6px;
+      border-left: 4px solid #2b8cff;
+    }
+    
+    .ficha-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+    }
+    
+    .ficha-numero {
+      font-weight: bold;
+      color: #2b8cff;
+    }
+    
+    .battery-container {
+      width: 80px;
+      height: 24px;
+      border: 2px solid #333;
+      border-radius: 4px;
+      position: relative;
+      background: #fff;
+      overflow: hidden;
+    }
+    
+    .battery-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #ff4444, #ffaa00, #44ff44);
+      transition: width 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .battery-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 11px;
+      font-weight: bold;
+      color: #333;
+      z-index: 2;
+    }
+    
+    .battery-tip {
+      position: absolute;
+      right: -6px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 12px;
+      background: #333;
+      border-radius: 0 2px 2px 0;
+    }
+    
+    .btn-detalle {
+      background: #6c757d;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    
+    .btn-detalle:hover {
+      background: #5a6268;
+    }
+    
+    .lista-container {
+      max-height: 400px;
+      overflow-y: auto;
+      text-align: left;
+    }
+    
+    .condicion-item {
+      padding: 8px;
+      margin: 4px 0;
+      background: #fff3cd;
+      border-left: 3px solid #ffc107;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+    
+    .cumple-item {
+      padding: 8px;
+      margin: 4px 0;
+      background: #d4edda;
+      border-left: 3px solid #28a745;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+  </style>
+
+   {% include 'nav.html' %}
+</head>
+<body>
+
+  <div class="card">
+    <h1>Generar comprobación de fichas</h1>
+    <button id="btn-generar">Generar</button>
+  </div>
+
+<script>
+document.getElementById('btn-generar').addEventListener('click', generar);
+
+async function generar() {
+  const btn = document.getElementById('btn-generar');
+  btn.disabled = true;
+  const originalText = btn.textContent;
+  btn.textContent = 'Generando...';
+
+  try {
+    const resp = await fetch('/generarHora', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({})
+    });
+
+    if (!resp.ok) {
+      const text = await resp.text().catch(()=>null);
+      throw new Error('Respuesta del servidor: ' + resp.status + (text ? ' — ' + text : ''));
+    }
+
+    const data = await resp.json();
+
+    const activos = Array.isArray(data.activos) ? data.activos : [];
+    const inactivos = Array.isArray(data.inactivos) ? data.inactivos : [];
+
+    function crearListaFichas(fichas, tipo) {
+      if (!fichas.length) return '<em>No hay fichas en esta categoría</em>';
+      
+      let html = '<div class="lista-container">';
+      fichas.forEach(ficha => {
+        const porcentaje = ficha.porcentaje || 0;
+        const color = porcentaje >= 80 ? '#44ff44' : porcentaje >= 50 ? '#ffaa00' : '#ff4444';
+        
+        html += `
+          <div class="ficha-item">
+            <div class="ficha-info">
+              <span class="ficha-numero">${ficha.numero_ficha}</span>
+              <div class="battery-container">
+                <div class="battery-fill" style="width: ${porcentaje}%; background: ${color}"></div>
+                <div class="battery-text">${porcentaje}%</div>
+                <div class="battery-tip"></div>
+              </div>
+            </div>
+            <button class="btn-detalle" onclick='verDetalle(${JSON.stringify(ficha)})'>
+              Ver detalle
+            </button>
+          </div>
+        `;
+      });
+      html += '</div>';
+      return html;
+    }
+
+    const html = `
+      <div style="text-align:left">
+        <h3 style="color: #28a745; margin-top: 0;">✅ Fichas Activas (${activos.length})</h3>
+        ${crearListaFichas(activos, 'activa')}
+        <hr style="margin: 20px 0;">
+        <h3 style="color: #dc3545; margin-top: 0;">❌ Fichas Inactivas (${inactivos.length})</h3>
+        ${crearListaFichas(inactivos, 'inactiva')}
+      </div>
+    `;
+
+    Swal.fire({
+      title: 'Resultado comprobación fichas',
+      html: html,
+      icon: 'info',
+      width: 900,
+      confirmButtonText: 'Cerrar',
+      confirmButtonColor: "#1e7e34",
+      customClass: {
+        container: 'swal-container-custom'
+      }
+    });
+
+  } catch (err) {
+    console.error('Error en generarHora:', err);
+    Swal.fire({
+      title: 'Error',
+      text: 'No se pudo completar la operación. Revisa la consola del navegador para más detalles.',
+      icon: 'error'
+    });
+  } finally {
+    btn.disabled = false;
+    btn.textContent = originalText;
+  }
+}
+
+function verDetalle(ficha) {
+  let html = `
+    <div style="text-align: left;">
+      <h3 style="margin-top: 0;">Ficha: ${ficha.numero_ficha}</h3>
+      
+      <div style="margin: 20px 0;">
+        <h4 style="color: #2b8cff;">📊 Completitud del Trimestre</h4>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="flex: 1; height: 30px; background: #e9ecef; border-radius: 15px; overflow: hidden; position: relative;">
+            <div style="height: 100%; width: ${ficha.porcentaje}%; background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); transition: width 0.3s ease;"></div>
+            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-weight: bold; color: #333;">
+              ${ficha.porcentaje}%
+            </div>
+          </div>
+        </div>
+      </div>
+  `;
+
+  if (ficha.cumple && ficha.cumple.length > 0) {
+    html += '<h4 style="color: #28a745;">✅ Condiciones cumplidas:</h4>';
+    ficha.cumple.forEach(c => {
+      html += `<div class="cumple-item">${c}</div>`;
+    });
+  }
+
+  if (ficha.condiciones && ficha.condiciones.length > 0) {
+    html += '<h4 style="color: #dc3545; margin-top: 15px;">⚠️ Condiciones NO cumplidas:</h4>';
+    ficha.condiciones.forEach(c => {
+      html += `<div class="condicion-item">${c}</div>`;
+    });
+  }
+
+  if ((!ficha.condiciones || ficha.condiciones.length === 0) && 
+      (!ficha.cumple || ficha.cumple.length === 0)) {
+    html += '<p style="color: #666;"><em>No hay información de condiciones disponible</em></p>';
+  }
+
+  html += '</div>';
+
+  Swal.fire({
+    title: 'Detalle de la Ficha',
+    html: html,
+    icon: 'info',
+    width: 700,
+    confirmButtonText: 'Cerrar',
+    confirmButtonColor: "#1e7e34"
+  });
+}
+</script>
+</body>
+</html>

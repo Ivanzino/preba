@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../static/css/horario.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+
+  <title>Horarios</title>
+</head>
+
+<body>
+  <header class="navbar">
+    <div class="navbar-container">
+      <img class="logo-sena" src="../static/img/Diseño sin título (4).png" alt="logo-sena">
+      <div class="titulo">Horarios CIDT Barrancabermeja</div>
+      <nav class="home">
+        <img src="../static/img/house_16dp_000000_FILL0_wght400_GRAD0_opsz20.png" alt="Inicio">
+      </nav>
+      <nav>
+        <button class="navbar-button">Instructores</button>
+        <button class="navbar-button">Fichas</button>
+        <button class="navbar-button">Ambientes</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="section1">
+      <div class="select-container">
+        <div class="select-group">
+          <label class="label" for="search-select">Selecciona un Ambiente:</label>
+          <select id="search-select" class="select2">
+            <option value="1">202 Bloque 3</option>
+            <option value="2">203 Bloque 3</option>
+            <option value="3">204 Bloque 3</option>
+            <option value="4">201 Bloque 7</option>
+            <option value="5">202 Bloque 7</option>
+          </select>
+        </div>
+
+        <div class="select-group2">
+          <label class="label" for="trimester-select">Trimestre 1</label>
+          <nav class="icono">
+            <img class="descarga" src="../static/img/download_for_offline_16dp_000000_FILL0_wght400_GRAD0_opsz20.png" alt="Descargar">
+          </nav>
+        </div>
+      </div>
+
+
+      <table class="grid-table" id="miTabla">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Lunes</th>
+            <th>Martes</th>
+            <th>Miércoles</th>
+            <th>Jueves</th>
+            <th>Viernes</th>
+            <th>Sábado</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <th>6:00 am</th>
+            <td data-description="Lunes 6:00 am" onclick="showAlert(this)">ADSO</td>
+            <td data-description="Martes 6:00 am" onclick="showAlert(this)">ADSO</td>
+            <td data-description="Miércoles 6:00 am" onclick="showAlert(this)">ADSO</td>
+            <td data-description="Jueves 6:00 am" onclick="showAlert(this)"></td>
+            <td data-description="Viernes 6:00 am" onclick="showAlert(this)">ADSO</td>
+            <td data-description="Sábado 6:00 am" onclick="showAlert(this)"></td>
+          </tr>
+          <tr>
+            <th>7:00 am</th>
+            <td data-description="Lunes 7:00 am" onclick="showAlert(this)">Gestión Administrativa</td>
+            <td data-description="Martes 7:00 am" onclick="showAlert(this)">Gestión Administrativa</td>
+            <td data-description="Miércoles 7:00 am" onclick="showAlert(this)">Gestión Administrativa</td>
+            <td data-description="Jueves 7:00 am" onclick="showAlert(this)"></td>
+            <td data-description="Viernes 7:00 am" onclick="showAlert(this)">Gestión Administrativa</td>
+            <td data-description="Sábado 7:00 am" onclick="showAlert(this)"></td>
+          </tr>
+          <tr>
+            <th>8:00 am</th>
+            <td data-description="Lunes 8:00 am" onclick="showAlert(this)">Perforación de Petróleo y Gas</td>
+            <td data-description="Martes 8:00 am" onclick="showAlert(this)">Perforación de Petróleo y Gas</td>
+            <td data-description="Miércoles 8:00 am" onclick="showAlert(this)">Perforación de Petróleo y Gas</td>
+            <td data-description="Jueves 8:00 am" onclick="showAlert(this)"></td>
+            <td data-description="Viernes 8:00 am" onclick="showAlert(this)">Perforación de Petróleo y Gas</td>
+            <td data-description="Sábado 8:00 am" onclick="showAlert(this)"></td>
+          </tr>
+          <tr>
+            <th>9:00 am</th>
+            <td data-description="Lunes 9:00 am" onclick="showAlert(this)">HSEQ</td>
+            <td data-description="Martes 9:00 am" onclick="showAlert(this)">HSEQ</td>
+            <td data-description="Miércoles 9:00 am" onclick="showAlert(this)">HSEQ</td>
+            <td data-description="Jueves 9:00 am" onclick="showAlert(this)"></td>
+            <td data-description="Viernes 9:00 am" onclick="showAlert(this)">HSEQ</td>
+            <td data-description="Sábado 9:00 am" onclick="showAlert(this)"></td>
+          </tr>
+          <tr>
+            <th>10:00 am</th>
+            <td data-description="Lunes 10:00 am" onclick="showAlert(this)">Construcción</td>
+            <td data-description="Martes 10:00 am" onclick="showAlert(this)">Construcción</td>
+            <td data-description="Miércoles 10:00 am" onclick="showAlert(this)">Construcción</td>
+            <td data-description="Jueves 10:00 am" onclick="showAlert(this)"></td>
+            <td data-description="Viernes 10:00 am" onclick="showAlert(this)">Construcción</td>
+            <td data-description="Sábado 10:00 am" onclick="showAlert(this)"></td>
+          </tr>
+          <tr>
+            <th>11:00 am</th>
+            <td data-description="Lunes 11:00 am" onclick="showAlert(this)"></td>
+            <td data-description="Martes 11:00 am" onclick="showAlert(this)"></td>
+            <td data-description="Miércoles 11:00 am" onclick="showAlert(this)"></td>
+            <td data-description="Jueves 11:00 am" onclick="showAlert(this)"></td>
+            <td data-description="Viernes 11:00 am" onclick="showAlert(this)"></td>
+            <td data-description="Sábado 11:00 am" onclick="showAlert(this)"></td>
+          </tr>
+          <tr>
+            <th>12:00 m</th>
+            <td data-description="Lunes 12:00 m" onclick="showAlert(this)"></td>
+            <td data-description="Martes 12:00 m" onclick="showAlert(this)"></td>
+            <td data-description="Miércoles 12:00 m" onclick="showAlert(this)"></td>
+            <td data-description="Jueves 12:00 m" onclick="showAlert(this)"></td>
+            <td data-description="Viernes 12:00 m" onclick="showAlert(this)"></td>
+            <td data-description="Sábado 12:00 m" onclick="showAlert(this)"></td>
+          </tr>
+          <tr>
+            <th>1:00 pm</th>
+            <td data-description="Lunes 1:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Martes 1:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Miércoles 1:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Jueves 1:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Viernes 1:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Sábado 1:00 pm" onclick="showAlert(this)"></td>
+          </tr>
+          <tr>
+            <th>2:00 pm</th>
+            <td data-description="Lunes 2:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Martes 2:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Miércoles 2:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Jueves 2:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Viernes 2:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Sábado 2:00 pm" onclick="showAlert(this)"></td>
+          </tr>
+          <tr>
+            <th>3:00 pm</th>
+            <td data-description="Lunes 3:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Martes 3:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Miércoles 3:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Jueves 3:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Viernes 3:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Sábado 3:00 pm" onclick="showAlert(this)"></td>
+          </tr>
+          <tr>
+            <th>4:00 pm</th>
+            <td data-description="Lunes 4:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Martes 4:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Miércoles 4:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Jueves 4:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Viernes 4:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Sábado 4:00 pm" onclick="showAlert(this)"></td>
+          </tr>
+          <tr>
+            <th>5:00 pm</th>
+            <td data-description="Lunes 5:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Martes 5:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Miércoles 5:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Jueves 5:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Viernes 5:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Sábado 5:00 pm" onclick="showAlert(this)"></td>
+          </tr>
+          <tr>
+            <th>6:00 pm</th>
+            <td data-description="Lunes 6:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Martes 6:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Miércoles 6:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Jueves 6:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Viernes 6:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Sábado 6:00 pm" onclick="showAlert(this)"></td>
+          </tr>
+          <tr>
+            <th>7:00 pm</th>
+            <td data-description="Lunes 7:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Martes 7:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Miércoles 7:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Jueves 7:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Viernes 7:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Sábado 7:00 pm" onclick="showAlert(this)"></td>
+          </tr>
+          <tr>
+            <th>8:00 pm</th>
+            <td data-description="Lunes 8:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Martes 8:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Miércoles 8:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Jueves 8:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Viernes 8:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Sábado 8:00 pm" onclick="showAlert(this)"></td>
+          </tr>
+          <tr>
+            <th>9:00 pm</th>
+            <td data-description="Lunes 9:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Martes 9:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Miércoles 94:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Jueves 9:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Viernes 9:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Sábado 9:00 pm" onclick="showAlert(this)"></td>
+          </tr>
+          <tr>
+            <th>10:00 pm</th>
+            <td data-description="Lunes 10:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Martes 10:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Miércoles 10:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Jueves 10:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Viernes 10:00 pm" onclick="showAlert(this)"></td>
+            <td data-description="Sábado 10:00 pm" onclick="showAlert(this)"></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+  <script>
+    function showAlert(cell) {
+      var description = cell.getAttribute("data-description");
+      alert(description);
+    }
+
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      $('.select2').select2({
+        placeholder: "Selecciona una opción",
+        allowClear: true
+      });
+    });
+  </script>
+  <script src="../static/js/horario.js"></script>
+  <style>
+    table {
+            width: 50%;
+            border-collapse: collapse;
+        }
+        td {
+            border: 1px solid #000;
+            padding: 10px;
+            cursor: pointer;
+        }
+        td:hover {
+            background-color: #f0f0f0;
+        }
+        #resumen {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #000;
+            width: 50%;
+            height: 100px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+
+<table>
+    <tr>
+        <td>Resumen de Celda 1</td>
+        <td>Resumen de Celda 2</td>
+    </tr>
+    <tr>
+        <td>Resumen de Celda 3</td>
+        <td>Resumen de Celda 4</td>
+    </tr>
+</table>
+
+<div id="resumen">Haz clic en una celda para ver el resumen aquí.</div>
+
+<script>
+    const celdas = document.querySelectorAll('td');
+    const resumenDiv = document.getElementById('resumen');
+
+    celdas.forEach(celda => {
+        celda.addEventListener('click', () => {
+            const resumen = `Contenido: ${celda.textContent}`; // Muestra el contenido de la celda clicada
+            resumenDiv.textContent = resumen; // Muestra el resumen en el div
+        });
+    });
+</script>
+
+
+</body>
+
+</html>

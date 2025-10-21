@@ -1,0 +1,41 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/menucoordinador.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<div class="contenedor">
+    <div class="contenedor-cuadro">
+        <div class="sidebar">
+            <a id="Registrar" href="" style="color: #39A900;">
+                <i class="fa-solid fa-users"></i>
+                <p class="sidebartext">Usuarios Registrados</p>
+            </a>
+            <a id="ubicaciones" href="" style="color: #50E5F9;">
+                <i class="fa-solid fa-user"></i>
+                <p class="sidebartext">Registro de Usuarios</p>
+            </a>
+            <a id="alquileres" href="" style="color: #FDC300;">
+                <i class="fa-solid fa-file-contract"></i>
+                <p class="sidebartext">Estadisticas</p>
+            </a>
+            <a id="" href="" style="color:  #71277A;">
+                <i class="fa-solid fa-building-columns"></i>
+                <p class="sidebartext">Centros de Formacion</p>
+            </a>
+
+
+
+
+            <a id="abrirModal2">
+                <i class="fa-solid fa-key"></i> <!-- Icono de cambio de contraseña -->
+                <p class="sidebartext">Cambiar contraseña</p>
+            </a>
+            <a id="cerrarsesion" href="/cerrar_sesion" style="color: #f32121;">
+                <i class="fa-solid fa-right-to-bracket"></i> <!-- Icono de cerrar sesión -->
+                <p class="sidebartext">Cerrar Sesión</p>
+
+            </a>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asociaciones</title>
+    <link rel="stylesheet" href="/HorariosSena/Src/static/css/formularioasociaciones.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="contenedor">
+        <form>
+            <h2>ASOCIACIONES</h2>
+            <div class="labelselect">
+                <label for="nombre">Por favor, digite el nombre:</label>
+                <input type="text" id="nombre" placeholder="Ej: Lucdovina Herrea Fúnez" required>
+            </div>
+            <div class="labelselect">
+                <label for="programa">Por favor, seleccione el programa</label>
+                <select name="programa" id="programa" required>
+                    <option value="" disabled selected>Por favor, seleccione el programa de formación</option>
+                    <optgroup label="Gestión Financiera y Administrativa">
+                        <option value="gestion_financiera">Gestión Financiera y de Tesorería</option>
+                        <option value="gestion_admin">Gestión Administrativa</option>
+                        <option value="gestion_contable_financiera">Gestión Contable y Financiera</option>
+                        <option value="gestion_tesoreria">Gestión de Tesorería y Recursos Financieros</option>
+                        <option value="gestion_bancaria">Gestión Bancaria y de Entidades Financieras</option>
+                    </optgroup>
+
+                    <!-- Recursos Humanos y Talento -->
+                    <optgroup label="Recursos Humanos y Talento">
+                        <option value="gestion_talento_humano">Gestión del Talento Humano</option>
+                        <option value="preseleccion_talento">Preselección de Talento Humano Mediado por Herramientas TIC
+                        </option>
+                        <option value="asistencia_admin">Asistencia Administrativa</option>
+                        <option value="recursos_humanos">Recursos Humanos</option>
+                    </optgroup>
+
+                    <!-- Logística y Transporte -->
+                    <optgroup label="Logística y Transporte">
+                        <option value="gestion_logistica">Gestión Logística</option>
+                        <option value="gestion_transporte">Gestión Integral del Transporte</option>
+                        <option value="coordinacion_logistica">Coordinación de Procesos Logísticos</option>
+                        <option value="operacion_transporte">Operación de Transporte Terrestre Automotor</option>
+                        <option value="gestion_portuaria">Gestión Portuaria</option>
+                    </optgroup>
+
+                    <!-- Producción y Desarrollo -->
+                    <optgroup label="Producción y Desarrollo">
+                        <option value="desarrollo_producto">Desarrollo y Modelado de Productos Industriales</option>
+                        <option value="produccion_agricola">Producción Agrícola</option>
+                        <option value="produccion_pecuaria">Producción Pecuaria</option>
+                        <option value="procesamiento_alimentos">Procesamiento de Alimentos</option>
+                        <option value="desarrollo_videojuegos">Desarrollo de Videojuegos</option>
+                    </optgroup>
+
+                    <!-- Servicios y Atención -->
+                    <optgroup label="Servicios y Atención">
+                        <option value="atencion_cliente">Atención Integral al Cliente</option>
+                        <option value="servicios_farmaceuticos">Servicios Farmacéuticos</option>
+                        <option value="guianza_turistica">Guianza Turística</option>
+                        <option value="servicios_recreativos">Gestión de Servicios Recreativos</option>
+                        <option value="atencion_prehospitalaria">Atención Prehospitalaria</option>
+                    </optgroup>
+
+                    <!-- Tecnología y Sistemas -->
+                    <optgroup label="Tecnología y Sistemas">
+                        <option value="Adso">ANÁLISIS Y DESARROLLO DE SOFTWARE</option>
+                        <option value="programacion_software">Programación de Software</option>
+                        <option value="desarrollo_web">Desarrollo Multimedia y Web</option>
+                        <option value="gestion_datos">Gestión de Redes de Datos</option>
+                        <option value="seguridad_cibernetica">Tratamiento de Riesgos de Ciberseguridad</option>
+                        <option value="analisis_datos">Programación para Analítica de Datos</option>
+                    </optgroup>
+
+                    <!-- Salud y Medio Ambiente -->
+                    <optgroup label="Salud y Medio Ambiente">
+                        <option value="salud_publica">Salud Pública</option>
+                        <option value="prevencion_control_ambiental">Prevención y Control Ambiental</option>
+                        <option value="gestion_recursos_naturales">Gestión de Recursos Naturales</option>
+                        <option value="salud_ambiental">Salud Ambiental y Seguridad Sanitaria</option>
+                        <option value="gestion_calidad">Gestión Integrada de la Calidad, Medio Ambiente, Seguridad y
+                            Salud Ocupacional</option>
+                    </optgroup>
+
+                    <!-- Arte y Diseño -->
+                    <optgroup label="Arte y Diseño">
+                        <option value="diseño_grafico">Diseño Gráfico</option>
+                        <option value="animacion_digital">Animación Digital</option>
+                        <option value="produccion_audiovisual">Producción Audiovisual</option>
+                        <option value="decoracion_espacios">Decoración de Espacios Interiores</option>
+                        <option value="modelado_3d">Modelado 3D para la Industria</option>
+                    </optgroup>
+
+                    <!-- Otros -->
+                    <optgroup label="Otros">
+                        <option value="Química">Química Aplicada a la Industria</option>
+                        <option value="gestion_pensiones">Gestión Integral en Fondos de Pensiones y Cesantías</option>
+                        <option value="asesoria_comercial">Asesoría Comercial</option>
+                        <option value="emprendimiento">Emprendimiento y Fomento Empresarial</option>
+                        <option value="gestion_eventos">Organización de Eventos</option>
+                        <option value="gestion_documental">Gestión Documental</option>
+                    </optgroup>
+                </select>
+            </div>
+            <div class="labelselect">
+                <label for="competencia">Por favor, digite la competencia:</label>
+                <input type="text" id="competencia" placeholder="Ej: Billingüismo" required>
+            </div>
+            <div class="boton">
+                <button type="submit">ASOCIAR</button>
+            </div>
+        </form>
+    </div>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2>Éxito</h2>
+            </div>
+            <div class="modal-body">
+                <p>La asociación se ha completado con éxito</p>
+            </div>
+            <div class="modal-footer">
+                <button id="closeModal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function mostrarModal(event) {
+            event.preventDefault();
+            const modal = document.getElementById('myModal');
+            modal.style.display = "block";
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const formulario = document.querySelector('form');
+            formulario.addEventListener('submit', mostrarModal);
+
+            const span = document.querySelector('.close');
+            const closeButton = document.getElementById('closeModal');
+
+            span.onclick = () => {
+                const modal = document.getElementById('myModal');
+                modal.style.display = "none";
+            }
+
+            closeButton.onclick = () => {
+                const modal = document.getElementById('myModal');
+                modal.style.display = "none";
+            }
+
+            window.onclick = (event) => {
+                const modal = document.getElementById('myModal');
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

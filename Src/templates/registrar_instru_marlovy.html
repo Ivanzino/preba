@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>instructores</title>
+    <link rel="stylesheet" href="../static/css/interfazmarlovy.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <script src="../static/js/interfazmarlovy.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="../static/sweetalert2/dist/sweetalert2.min.css"> <!-- Cambia la ruta -->
+    <script src="../static/sweetalert2.all.min.js"></script> <!-- Cambia la ruta -->
+</head>
+
+<body>
+    <header class="header">
+        <nav class="sena-nav">
+            <ul>
+                <li><a href="../template/interfazmarlovy.html">Home</a></li>
+                <li><a href="../template/creacion_de_horario_marlovy.html">Creación de Horario</a></li>
+                <li><a href="../template/fr.html">Asociar RAPS</a></li>
+                <li>
+                    <a>Opciones Adicionales</a>
+                    <ul>
+                        <li><a href="../template/crear_ambientes.html">Registrar Ambiente</a></li>
+                        <li><a href="../template/crear_centros.html">Registrar Centro</a></li>
+                        <li><a href="../template/crear_perfiles.html">Crear Perfiles</a></li>
+                        <li><a href="../template/crear_trimestre.html">Crear Trimestres del Año</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="../template/registrar_instru_marlovy.html">Instructor</a>
+                    <ul>
+                        <li><a href="../template/registrar_instru_marlovy.html">Registrar Instructor</a></li>
+                        <li><a href="../template/registrar_instru_marlovy.html">Asociar Instructor</a></li>
+                        <li><a href="../template/registrar_instru_marlovy.html">Crear Agenda</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="registrar-instru">
+        <br><br><br>
+        <div class="contenedor">
+            <h2>REGISTRAR INSTRUCTOR </h2>
+            <form id="registro-form">
+                <h3>Registrar Instructor</h3>
+                <div class="labelselect">
+                    <label for="cedula">Por favor, digite la cédula del instructor:</label>
+                    <input type="number" id="cedula" placeholder="Ej: 1096801877" required>
+                </div>
+                <div class="labelselect">
+                    <label for="nombre">Por favor, digite el nombre del instructor:</label>
+                    <input type="text" id="nombre" placeholder="Ej: Lucdovina Herrea Fúnez" required>
+                </div>
+                <div class="labelselect">
+                    <label for="email">Por favor, digite el correo electrónico del instructor:</label>
+                    <input type="email" id="email" placeholder="Ej: ejemplo@gmail.com" required>
+                </div>
+                <div class="labelselect">
+                    <label for="telefono">Por favor, digite el teléfono del instructor:</label>
+                    <input type="tel" id="telefono" placeholder="Ej: 3133727913" required>
+                </div>
+
+                <div class="boton">
+                    <button type="button" onclick="showAlert()">Registrar</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- <script>
+        function showAlert() {
+            Swal.fire({
+                title: "Instructor Registrado con exito, Desea asociar al instructor?",
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: "Asociar",
+                denyButtonText: `No, Guardar Instructor`
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire("Saved!", "", "success").then(() => {
+                        // Enviar el formulario después de mostrar el mensaje de éxito
+                        document.getElementById('registro-form').submit();
+                    });
+                } else if (result.isDenied) {
+                    Swal.fire("Changes are not saved", "", "info");
+                }
+            });
+        }
+    </script> -->
+    <script>
+        function showAlert() {
+            Swal.fire({
+                title: "Do you want to save the changes?",
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: "Save",
+                denyButtonText: `Don't save`,
+                background: "#fff",
+                backdrop: "rgba(0,0,0,0.4)",
+                didOpen: () => {
+                    const popup = Swal.getPopup(); 
+                    const logo = document.createElement("img");
+                    logo.src = "../static/img/logo-sena-verde-png-sin-fondo.webp";
+                    
+                    // Estilos para el logo
+                    Object.assign(logo.style, {
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                        opacity: "0.2",
+                        width: "220px",
+                        pointerEvents: "none",
+                        zIndex: "0"
+                    });
+                    
+                    // Insertar el logo
+                    popup.insertBefore(logo, popup.firstChild);
+                    
+                    // Asegurar que contenido esté por encima
+                    popup.querySelectorAll(".swal2-title, .swal2-html-container, .swal2-actions")
+                        .forEach(el => el.style.zIndex = "1");
+                    
+                    // Específicamente para el icono de success
+                    const successIcon = popup.querySelector(".swal2-icon.swal2-success");
+                    if (successIcon) {
+                        // Hacer transparente el fondo circular blanco del icono success
+                        const circularLines = popup.querySelectorAll(".swal2-success-circular-line-left, .swal2-success-circular-line-right");
+                        circularLines.forEach(el => {
+                            el.style.backgroundColor = "transparent";
+                        });
+                        
+                        // También hacer transparente el fix que SweetAlert2 usa
+                        const successFix = popup.querySelector(".swal2-success-fix");
+                        if (successFix) {
+                            successFix.style.backgroundColor = "transparent";
+                        }
+                        
+                        // Asegurar que el anillo y la marca de verificación sean visibles
+                        const successRing = popup.querySelector(".swal2-success-ring");
+                        if (successRing) {
+                            successRing.style.zIndex = "1";
+                        }
+                        
+                        const successLines = popup.querySelectorAll(".swal2-success-line-tip, .swal2-success-line-long");
+                        successLines.forEach(el => {
+                            el.style.zIndex = "2";
+                        });
+                    }
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire("Saved!", "", "success").then(() => {
+                        document.getElementById('registro-form').submit();
+                    });
+                } else if (result.isDenied) {
+                    Swal.fire("Changes are not saved", "", "info");
+                }
+            });
+        }
+    </script>
+
+    <section id="asociar-instru" class="instructores">
+        <div class="contenedor">
+            <h2>ASOCIAR INSTRUCTOR</h2>
+            <form>
+                <h3 id="asociar-instru">Asociar Perfil</h3>
+                <div class="labelselect">
+                    <label for="cedula">Por favor, digite la Cedula del Instructor:</label>
+                    <input type="number" id="nombre" placeholder="Ej: Lucdovina Herrea Fúnez" required>
+                </div>
+                <div class="labelselect">
+                    <label for="programa">Por favor, seleccione el programa</label>
+                    <select name="programa" id="programa" required>
+                        <option value="" disabled selected>Por favor, seleccione el programa de formación</option>
+                        <!-- Aquí van tus opciones... -->
+                    </select>
+                </div>
+                <div class="labelselect">
+                    <label for="competencia">Por favor, digite la competencia:</label>
+                    <input type="text" id="competencia" placeholder="Ej: Billingüismo" required>
+                </div>
+                <div class="boton">
+                    <button type="submit">Asociar</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <section id="agenda">
+        <div class="contenedor">
+            <h2>CREAR AGENDA</h2>
+            <div class="labelselect">
+                <label for="crear_agenda">¿Desea crear la agenda del instructor?</label>
+                <div class="botones">
+                    <div class="boton">
+                        <button type="submit">Sí</button>
+                    </div>
+                    <div class="boton">
+                        <button type="submit">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+
+</html>

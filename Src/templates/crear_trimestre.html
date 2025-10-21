@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Trimestre</title>
+    <link rel="stylesheet" href="/HorariosSena/Src/static/css/interfazmarlovy.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <script src="../static/js/interfazmarlovy.js"></script>
+</head>
+
+<body>
+    <div id="crear-trimestres" class="contenedor">
+
+        <form>
+
+            <h2>CREAR TRIMESTRES</h2>
+            <div class="labelselect">
+                <label for="ficha">Seleccione la ficha, por favor:</label>
+                <select name="ficha" id="ficha" required>
+                    <option value="" disabled selected>Click aquí</option>
+                    <option value="Amazonas">Amazonas</option>
+                    <option value="adso">Análisis y Desarrollo de Software</option>
+                    <option value="gestion-redes">Gestión de Redes de Datos</option>
+                    <option value="mantenimiento-equipos">Mantenimiento de Equipos de Cómputo y Redes</option>
+                    <option value="desarrollo-apps">Desarrollo de Aplicaciones Móviles</option>
+                    <option value="soporte-ti">Soporte Técnico en Tecnologías de la Información</option>
+                </select>
+            </div>
+
+
+            <div class="labelselect">
+                <label for="ficha">Seleccione la jornada, por favor:</label>
+                <select name="ficha" id="ficha" required>
+                    <option value="" disabled selected>Click aquí</option>
+                    <option value="dia">Día</option>
+                    <option value="mixta">Mixta</option>
+                </select>
+            </div>
+
+            <label for="fecha-inicio">Fecha de Inicio del Trimestre:</label>
+            <input type="date" id="fecha-inicio" name="fecha-inicio" required><br><br>
+
+            <label for="fecha-fin">Fecha de Fin del Trimestre:</label>
+            <input type="date" id="fecha-fin" name="fecha-fin" required><br><br>
+
+            <h3>¿Desea crear el trimestre?</h3>
+            <div class="boton horario">
+                <button type="submit">Crear</button>
+            </div>
+        </form>
+    </div>
+
+
+</body>
+
+</html>

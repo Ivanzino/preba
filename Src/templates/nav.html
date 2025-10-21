@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="../static/css/nav.css">
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+</head>
+<header class="header">
+  <nav class="sena-nav">
+    <ul>
+      <li><a href="inicio_gestor"><i class="bi bi-house-door"></i></a></li>
+      <li>
+        <a href="registrar_instructor">Instructores</a>
+
+      </li>
+      <li><a href="crear_fichas">Registrar Fichas</a></li>
+      <li><a href="raps">Crear Malla</a></li>
+      <li>
+        <a>Opciones Adicionales</a>
+
+        <ul>
+          <li>
+            <a href="sedes">Registrar Sedes</a>
+          </li>
+          <li>
+            <a href="registrar_ambientes">Registrar Ambiente</a>
+          </li>
+          <li>
+            <a href="perfiles">Crear Perfiles</a>
+          </li>
+          <li>
+            <a href="trimestresAño">Crear Calendario Académico</a>
+          </li>
+          <li>
+            <a id="admin-link" href="gestionar_roles">Gestionar Roles de Usuarios</a>
+          </li>
+          <li>
+            <a href="generarHora">📅 Generar Horario</a>
+          </li>
+          <li>
+            <a href="perfilesAsociarComp">Listar programas y competencias</a>
+          </li>
+        </ul>
+      </li>
+
+      <li>
+        <a href="generar_horarios">Generar Horario</a>
+      </li>
+      <li>
+
+        <a href="cerrar_sesion">Cerrar Sesion</a>
+      </li>
+
+    </ul>
+
+  </nav>
+</header>
+
+<body>
+  <script>
+    // Verificar si el usuario es admin para mostrar el enlace
+    window.addEventListener('DOMContentLoaded', function () {
+      fetch('/verificar_admin')
+        .then(response => response.json())
+        .then(data => {
+          if (data.es_admin) {
+            document.getElementById('admin-link').style.display = 'block';
+          }
+        })
+        .catch(error => console.error('Error al verificar estado de admin:', error));
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Fichas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="icon" href="../static/img/xx_modified-removebg-preview.png">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/enviarFichas.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../static/js/crear_fichas.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body class="fondo_bl">
+
+    <header class="header">
+        {% include 'nav.html' %}
+    </header>
+
+    <main>
+        <section id="horario" class="py-10 bg-gray-100">
+            <div class="max-w-5xl mx-auto p-8 bg-white shadow-lg rounded-lg">
+                <div class="text-center mb-6">
+                    <h2 class="text-3xl font-bold">CREAR FICHA</h2>
+                </div>
+                <div>
+                    <form id="formulario" action="/upload" enctype="multipart/form-data" method="POST" class="space-y-6">
+                        <div>
+                            <label for="archivo"
+                                class="block text-center p-6 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer">
+                                <span class="text-gray-600">Selecciona un archivo de Juicios Evaluativos</span>
+                                <input type="file" id="archivo" name="archivo" accept=".xlsx, .xls" required >
+                            </label>
+                        </div>
+                        <div class="text-center">
+                            <input id="uploadBtn" type="button" value="ANALIZAR" class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div id="modal_oculto">
+                <div class="modal-content" id="programa-info">
+                    <button class="close-btn" onclick= cerrarModal()>×</button>
+                    <form id="registro-form" class="space-y-6"  method="post">
+                        <h3 class="text-2xl font-semibold text-center mb-4">COMPLETA LA INFORMACIÓN</h3>
+
+                        <div class="grid grid-cols-2">
+                            <label for="nombrePrograma" class="block text-lg font-medium text-gray-700">Nombre de programa:</label>
+                            <div id="nombrePrograma" class="text-gray-900 font-semibold">
+                                <strong>{{ Nombre_Programa }}</strong>
+                            </div>
+                            <input type="hidden" id="codigo_programa" name="codigo_programa">
+                            <input type="hidden" id="fecha_inicio_lectiva" name="fecha_inicio_lectiva">
+                            <input type="hidden" id="fecha_fin_lectiva" name="fecha_fin_lectiva">
+                            <label for="numeroFicha" class="block text-lg font-medium text-gray-700">Número de Ficha:</label>
+                            <div id="numeroFicha" class="text-gray-900 font-semibold">
+                                <strong>{{ Numero_Ficha }}</strong>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-6">
+                            <div>
+                                <label for="sigla" class="block font-medium">Sigla del Programa de Formación:</label>
+                                <input type="text" id="sigla" name="sigla" required class="w-full border-gray-300 rounded-lg p-3">
+                            </div>
+                            <div>
+                                <label for="instructor" class="block font-medium">Instructor Líder:</label>
+                                <select id="instructor" name="instructor" required class="w-full border-gray-300 rounded-lg p-3">
+                                    {% for instructor in datos_instructores %}
+                                    <option value="{{ instructor[0] }}">{{ instructor[1] }}</option>
+                                {% endfor %}
+                                </select>
+                            </div>
+                            <div>
+                                <label for="trimestre" class="block font-medium">Cantidad de Trimestres:</label>
+                                <input type="number" id="trimestre" name="trimestre" required class="w-full border-gray-300 rounded-lg p-3">
+                            </div>
+                            <div>
+                                <label for="jornada" class="block font-medium">Jornada:</label>
+                                <select id="jornada" name="jornada" required class="w-full border-gray-300 rounded-lg p-3">
+                                    <option value="mañana">Mañana</option>
+                                    <option value="tarde">Tarde</option>
+                                    <option value="mixta">Mixta</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="oferta" class="block font-medium">Oferta</label>
+                                <select id="oferta" name="oferta" required class="w-full border-gray-300 rounded-lg p-3">
+                                    <option value=0>Abierta</option>
+                                    <option value=1>Cerrada</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="sede" class="block font-medium">Sede:</label>
+                                <select id="sede" name="sede" required class="w-full border-gray-300 rounded-lg p-3">
+                                    {% for sede in datos_sedes %}
+                                        <option value="{{ sede[0] }}">{{ sede[1] }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div>
+                                <label for="fechaInicio" class="block font-medium">Fecha de Inicio de Inducción:</label>
+                                <input type="date" id="fechaInicio" name="fechaInicio" required class="w-full border-gray-300 rounded-lg p-3">
+                            </div>
+                            <div>
+                                <label for="fechaFin" class="block font-medium">Fecha de Fin de Inducción:</label>
+                                <input type="date" id="fechaFin" name="fechaFin" required class="w-full border-gray-300 rounded-lg p-3">
+                            </div>
+                        </div>
+                        <div class="text-center mt-6">
+                            <input id="submitBtn" type="submit" value="REGISTRAR" class="px-8 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

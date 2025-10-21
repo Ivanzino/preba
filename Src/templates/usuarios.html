@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Usuario</title>
+    <link rel="stylesheet" href="../static/css/usuarios.css">
+    <script src="../static/js/usuarios.js"></script>
+</head>
+<body>
+
+    <h1>Registrar Usuario</h1>
+    <form action="#" method="post">
+        <label for="tipoUsuario">Roles</label>
+        <select id="tipoUsuario" name="tipoUsuario" onchange="toggleFields()" required>
+            <option value="">Seleccione...</option>
+            <option value="Instructor">Instructor</option>
+            <option value="Gestor">Gestor</option>
+            <option value="Administrador">Administrador</option>
+        </select>
+
+        <div id="instructorFields" class="hidden">
+            <label for="nombreInstructor">Nombre del Instructor</label>
+            <input type="text" id="nombreInstructor" name="nombreInstructor">
+            
+            <label for="profesionInstructor">Profesión del Instructor</label>
+            <input type="text" id="profesionInstructor" name="profesionInstructor">
+            
+            <label for="tipoVinculacion">Tipo de Vinculación</label>
+            <select id="tipoVinculacion" name="tipoVinculacion">
+                <option value="Termino Fijo">Funcionario</option>
+                <option value="Contratista">Contratista</option>
+            </select>
+            <label for="cedula">Cedula</label>
+            <input type="Number">
+            <label for="correo">Correo Electronico</label>
+            <input type="email">
+            <label for="telefono">Telefono</label>
+            <input type="number">
+
+        </div>
+
+        <div id="gestorFields" class="hidden">
+            <label for="nombreGestor">Nombre del Gestor</label>
+            <input type="text" id="nombreGestor" name="nombreGestor">
+            
+            <label for="profesionGestor">Profesión</label>
+            <input type="text" id="profesionGestor" name="profesionGestor">
+            
+            <label for="cedula">Cedula</label>
+            <input type="Number">
+            <label for="correo">Correo Electronico</label>
+            <input type="email">
+            <label for="telefono">Telefono</label>
+            <input type="number">
+        </div>
+
+        <div id="adminFields" class="hidden">
+            <label for="cargoAdmin">Cargo</label>
+            <input type="text" id="cargoAdmin" name="cargoAdmin">
+            
+            <label for="nombreAdmin">Nombre</label>
+            <input type="text" id="nombreAdmin" name="nombreAdmin">
+            
+            <label for="identificacionAdmin">Identificación</label>
+            <input type="number" id="identificacionAdmin" name="identificacionAdmin">
+        </div>
+
+        <input type="submit" value="Registrar Usuario">
+    </form>
+
+</body>
+</html>
