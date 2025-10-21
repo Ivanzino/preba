@@ -1,0 +1,111 @@
+body {
+  background-color: #f5f5f5;
+  font-family: Arial, sans-serif;
+}
+/* Aumentamos el z-index de SweetAlert */
+.swal2-container {
+  z-index: 9999 !important;
+}
+/* Aseguramos que los select2 dentro de SweetAlert tengan un z-index superior */
+.swal2-container .select2-container {
+  z-index: 10000 !important;
+  width: 100% !important;
+}
+/* Mejora de la alineación vertical del texto en Select2 */
+.select2-container .select2-selection--single {
+  height: 38px;
+  display: flex;
+  align-items: center;
+}
+/* Posicionamos mejor la flecha del Select2 */
+.select2-container--default
+  .select2-selection--single
+  .select2-selection__arrow {
+  height: 38px;
+  display: flex;
+  align-items: center;
+}
+/* Mejoramos la alineación del texto dentro del Select2 */
+.select2-container--default
+  .select2-selection--single
+  .select2-selection__rendered {
+  line-height: normal;
+  padding-top: 0;
+  padding-bottom: 0;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+/* Aseguramos que el placeholder esté bien centrado */
+.select2-container--default
+  .select2-selection--single
+  .select2-selection__placeholder {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+.select2-dropdown {
+  z-index: 10001 !important; /* Aseguramos que el dropdown aparezca sobre todo */
+}
+.container {
+  max-width: 600px;
+  margin: 50px auto;
+}
+.card {
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  background-color: white;
+}
+h1 {
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 30px;
+  text-align: center;
+}
+.form-control {
+  margin-bottom: 20px;
+}
+.btn-success {
+  background-color: #28a745;
+  border: none;
+  padding: 10px 20px;
+  width: 100%;
+  font-weight: bold;
+}
+.alert {
+  margin-bottom: 20px;
+}
+.user-info {
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+}
+.user-list {
+  max-height: 400px;
+  overflow-y: auto;
+  margin-top: 20px;
+}
+.action-buttons {
+  display: flex;
+  gap: 10px;
+}
+.delete-btn {
+  color: white;
+  background-color: #dc3545;
+  border: none;
+}
+.search-bar {
+  margin-bottom: 20px;
+}
+
+.container {
+    opacity: 0;                     /* Comienza invisible */
+    animation: aparecer 0.8s ease-out forwards; /* Anima la opacidad  */
+  }
+  
+  @keyframes aparecer {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }

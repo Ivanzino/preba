@@ -1,0 +1,501 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,521;1,521&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    font-family: "Montserrat", sans-serif !important;
+    font-optical-sizing: auto !important;
+    font-weight: 500 !important;
+    font-style: normal !important;
+}
+
+table th {
+    background-color: #49aa38 !important;
+    color: white !important;
+    text-align: center !important;
+}
+
+table td {
+    text-align: center !important;
+}
+
+.fondo-h2 {
+    margin-top: 6%;
+    display: flex;
+
+}
+
+.titulo {
+    width: 100%;
+      }
+#titulos-prim{
+    margin: 3%;
+}
+
+
+.icon {
+    margin-right: 2%;
+    font-size: 35px;
+    font-weight: bold;
+    height: 100%;
+
+}
+
+.botones-new {
+    display: inline-block;
+    position: relative;
+    top: 11%;
+    left: 69%;
+
+
+}
+
+.botones-new2 {
+    display: inline-block;
+    position: relative;
+    top: 11%;
+    left: 70%;
+}
+
+.caja_nuevo {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(66, 65, 65, 0.095);
+    backdrop-filter: blur(2px);
+    z-index: 1000;
+
+
+    
+}
+.contenedor1 {
+    background-color: #fff;
+    /* cursor: pointer; */
+    border-radius: 8px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    width: 50%;
+    text-align: center;
+    justify-content: center;
+    margin:auto;
+}
+.close3{
+        position: absolute;
+    top: 23%;
+    right: 26%;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #444;
+
+ }
+ .probar{
+    display: flex;
+  width: 100%;
+  box-sizing: border-box;
+ }
+
+.labelselect2 {
+    margin-bottom: 15px;
+
+}
+
+.labelselect2  {
+  
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    
+}
+
+.labelselect2 input{
+    width: 250px;
+    padding: 6px;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    color: #333;
+    box-shadow: 1 px 1px 1px rgba(0, 0, 0, 0.63);
+}
+.labelselect2 select {
+    width: 250px;
+    padding: 7px;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    color: #333;
+    box-shadow: 1 px 1px 1px rgba(0, 0, 0, 0.63);
+}
+
+/* ///////// caja_masiva//////////////////  */
+.masivo{
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(66, 65, 65, 0.095);
+    backdrop-filter: blur(2px);
+    z-index: 1000;
+}
+.contenedor_masivo {
+    background-color: #fff;
+    /* cursor: pointer; */
+    border-radius: 8px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    width: 50%;
+    text-align: center;
+    justify-content: center;
+    margin:auto;
+}
+#boton_envio {
+    margin-bottom: 5%;
+    margin-top: 5%;
+}
+
+.close4{
+    position: absolute;
+top: 30%;
+right: 26%;
+font-size: 24px;
+cursor: pointer;
+}
+
+
+/* From Uiverse.io by omar49511 */ 
+.container-btn-file {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    margin-left: 36%;
+    margin-bottom: 3%;
+    background-color: #307750;
+    color: #fff;
+    border-style: none;
+    padding: 1em 2em;
+    border-radius: 0.5em;
+    overflow: hidden;
+    z-index: 1;
+    box-shadow: 4px 8px 10px -3px rgba(0, 0, 0, 0.356);
+    transition: all 250ms;
+  }
+  .container-btn-file input[type="file"] {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+  }
+  .container-btn-file > svg {
+    margin-right: 1em;
+  }
+  .container-btn-file::before {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 0;
+    border-radius: 0.5em;
+    background-color: #469b61;
+    z-index: -1;
+    transition: all 350ms;
+  }
+  .container-btn-file:hover::before {
+    width: 100%;
+  }
+  
+/* //////////////////CALENDAARIO////////////////////// */
+.calendario_caja{
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(66, 65, 65, 0.095);
+    backdrop-filter: blur(2px);
+    z-index: 1000;
+}
+
+.contenedor_calendario {
+    background-color: #fff;
+    /* cursor: pointer; */
+    border-radius: 8px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    width: 50%;
+    text-align: center;
+    justify-content: center;
+    margin:auto;
+}
+.close5{
+    position: absolute;
+top: 20%;
+right: 26%;
+font-size: 24px;
+cursor: pointer;
+}
+
+.toggle-label{
+    background-color: #08ba14;
+}
+
+/* //////////////////////////////////boton//////////////////// */
+.boton {
+ 
+    padding: 5px 10px;
+    border: 2px solid #2c2c2c;
+    background-color: #000000e7;
+    color: #ffffff;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: all 0.4s ease;
+    outline: none;
+    position: relative;
+    overflow: hidden;
+    font-weight: bold;
+    text-align: center;
+}
+
+.boton::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle,
+            rgba(255, 255, 255, 0.25) 0%,
+            rgba(255, 255, 255, 0) 70%);
+    transform: scale(0);
+    transition: transform 0.5s ease;
+}
+
+.boton:hover::after {
+    transform: scale(4);
+}
+
+.boton:hover {
+    border-color: #5cea0a;
+    background: #08ba14;
+}
+#boton-asociar {
+    margin-top: 15%;
+}
+
+/* From Uiverse.io by iZOXVL */
+.boton_nuevo {
+    padding: 5px 10px;
+    border: 2px solid #2c2c2c;
+    background-color: #000000e7;
+    color: #ffffff;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: all 0.4s ease;
+    outline: none;
+    position: relative;
+    overflow: hidden;
+    font-weight: bold;
+}
+
+.boton_nuevo::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle,
+            rgba(255, 255, 255, 0.25) 0%,
+            rgba(255, 255, 255, 0) 70%);
+    transform: scale(0);
+    transition: transform 0.5s ease;
+}
+
+.boton_nuevo:hover::after {
+    transform: scale(4);
+}
+
+.boton_nuevo:hover {
+    border-color: #5cea0a;
+    background: #08ba14;
+}
+
+.bi-eye {
+    color: blue;
+}
+
+.bi-journal-text,
+.bi-pencil-square,
+.bi-calendar-date {
+    color: rgb(0, 0, 0);
+}
+
+.bi-vinyl-fill {
+    cursor: pointer;
+    color: red;
+}
+
+.bi-eye:hover {
+    cursor: pointer;
+    color: rgba(15, 15, 163, 0.647);
+}
+
+.bi-journal-text:hover,
+.bi-pencil-square:hover,
+.bi-calendar-date:hover {
+    cursor: pointer;
+    color: rgb(78, 120, 200);
+}
+
+.bi {
+    margin: 0 5px;
+    font-size: 20px;
+}
+
+.icon2 {
+    margin: 2%;
+    font-size: 17px;
+}
+
+
+
+/* ============================================================================================================================================= */
+/* asociar competencias */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+
+.modal-content {
+    background-color: #ede6e6;
+    padding: 20px;
+    border-radius: 5px;
+    width: auto;
+    height: auto;
+    text-align: center;
+    position: relative;
+}
+
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.tamaño-cli-2 {
+    margin-bottom: 3%;
+    margin-top: 3%;
+    padding: 5px;
+    width: 78%;
+    border-radius: 5px;
+    border: 1px gainsboro solid;
+    cursor: pointer;
+    outline: none;
+}
+.bi-trash{
+    color: red;
+    cursor: pointer;
+}
+#añadir{
+    margin-left: 2%;
+}
+
+.con-boton {
+    height: 10%;
+    width: 100%;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+
+
+/* ============================================================================================================================================= */
+/* editar info instructor*/
+.madulo {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(66, 65, 65, 0.095);
+    backdrop-filter: blur(2px);
+    z-index: 1000;
+}
+
+.modal-content-2 {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    width: 45%;
+    margin: auto;
+    text-align: center;
+    position: relative;
+
+}
+
+
+.close-2 {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+
+}
+#registrar {
+    margin: 3%;
+}
+
+
+.switch-btn {
+    position: relative;
+ bottom: 48px;
+    left: 105%;
+    width: 10%;
+    padding: 5px 4px;
+    background-color: #000000;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .switch-btn:hover {
+    background-color: #0056b3;
+  }
+  
+

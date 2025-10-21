@@ -1,0 +1,83 @@
+.modelo{
+    display: grid;
+    /* grid-template-columns: (2, 100px); */
+    /* background-color: black; */
+    /* grid-template-rows: (1, 100px ); */
+    justify-content: center;
+}
+.hijo1{
+    grid-row: 2/2;
+    background-color: aquamarine;
+    display: grid;
+    grid-template-rows: repeat(17,29px);
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    margin: 10px 10px;
+}
+.hijo2{
+    grid-column: 2/2;
+    background-color: green;
+    border: 1px solid black;
+    display: grid;
+    grid-template-columns: repeat(6,110PX);
+    padding: 10px 10px;
+}
+.hijo3{
+    /* grid-area: 2/2/18/7; */
+    background-color:antiquewhite;
+    grid-column: 2/3;
+    /* margin: 0px 10px; */
+    border: 1px solid black;
+    margin: 10px  0px;
+
+    display: grid;
+    grid-template-columns: repeat(6,110px);
+    grid-template-rows: repeat(13,40px);
+
+
+}
+.h{
+    margin: 0 10px;
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    margin-left: 25px;
+}
+.hh{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0%;
+    border: 1px solid black;
+
+
+}
+.horas{
+    margin: 0 10px;
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
+/* .hijo4{
+    grid-row: 2/17;
+    background-color: brown;
+    border: 1px solid black;
+    margin: 10px 10px;
+
+}
+.hijo5{
+    grid-row: 2/17;
+    display: grid;
+    grid-template-rows: repeat(16,1fr);
+    background-color: crimson;
+    border: 1px solid black;
+    margin: 10px 10px;
+    align-items: center;
+    justify-content: center;
+
+} */

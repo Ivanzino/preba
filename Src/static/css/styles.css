@@ -1,0 +1,244 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  background-color: #f9f9f9;
+}
+
+.header,
+.paginacion {
+  margin-bottom: 20px;
+}
+
+#agregar-btn,
+#agregar-programa-btn,
+.page-btn,
+#guardar-competencia,
+#guardar-programa {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: white;
+  background-color: #4caf50;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s;
+}
+
+#agregar-btn:hover,
+#agregar-programa-btn:hover,
+.page-btn.active,
+#guardar-competencia:hover,
+#guardar-programa:hover {
+  background-color: #45a049;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  margin-bottom: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  background-color: #ffffff;
+  text-align: left;
+  vertical-align: top;
+  width: 20%;
+}
+
+th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+p#proyecto {
+  margin: 0;
+  padding: 8px;
+  border: 1px solid #ddd;
+  background-color: #f4f4f4;
+  word-wrap: break-word;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: #ffffff;
+  margin: 5% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 600px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.modal-contentt {
+  background-color: #ffffff;
+  margin: 5% auto;
+  padding: 10px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 600px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.close {
+  color: #888;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-content {
+  padding: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px; 
+  margin-bottom: 15px;
+}
+
+.form-row div {
+  /* Hace que cada div tome el mismo ancho */
+  flex: 1; 
+}
+
+button {
+  display: block;
+  margin: 0 auto;
+}
+
+
+#competencia-form label,
+#programa-form label,
+#formuka label {
+  display: block;
+  margin: 10px 0 5px;
+  font-weight: bold;
+}
+
+#formuka2 label{
+  display: inline-block;
+  margin:  30px 20px 50px;
+  font-weight: bold;
+}
+
+#guardar-competencia {
+  display: block;
+  font-weight: bold;
+}
+
+
+#competencia-form input,
+#competencia-form select,
+#programa-form input,
+#programa-form select,
+#formuka input,
+#formuka select,
+.select-ancho {
+    width: calc(100% - 20px);
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+#formuka2 select,
+.select-ancho {
+    width: calc(100% - 20px);
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+#formuka2 input,
+.select-ancho {
+  width: calc(20% - 20px);
+  padding: 8px;
+  margin-bottom: 10px;
+  margin-left:40px;
+  border-radius: 4px;
+  box-sizing: border-box;
+  align-items: center;
+  overflow: hidden;
+}
+
+
+
+.paginacion {
+  text-align: center;
+}
+
+.page-btn {
+  margin: 0 5px;
+  padding: 10px 15px;
+  font-size: 16px;
+  background-color: #e0e0e0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.page-btn:hover {
+  background-color: #d4d4d4;
+}
+
+.inner-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.inner-table td {
+  padding: 4px;
+  border: 1px solid #ddd;
+}
+
+@media (max-width: 768px) {
+  #competencia-form input,
+  #competencia-form select,
+  #programa-form input,
+  #programa-form select {
+    width: 100%;
+  }
+
+  .modal-content {
+    /* background-color: red; */
+    width: 90%;
+  }
+
+  .page-btn {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+}

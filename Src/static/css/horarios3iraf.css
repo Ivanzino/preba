@@ -1,0 +1,79 @@
+*{
+    margin: 0%;
+    padding: 0%;
+    box-sizing: border-box;
+}
+body{
+    background: #EAEBEF;
+    display: flex;
+}
+nav{
+    width: 300px;
+}
+.navLink{
+    color: #000;
+    display: block;
+    padding: 15px 0;
+    text-decoration: none;
+}
+.navLink-inside{
+    border-radius: 6px;
+    padding-left: 20px;
+}
+.navLink-inside:hover{
+    background: #EAEBEF;
+}
+.list{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    background: rgba(0, 128, 0, 0.842);
+}
+.listaItem{
+    list-style: none;
+    width: 100%;
+    text-align: center;
+    overflow: hidden;
+}
+.listaItem-click{
+    cursor: pointer;
+}
+.listaBoton{
+    display: flex;
+    align-items: center;
+    gap: 1em;   
+    width: 70%;
+    margin: 0 auto;
+}
+.arrow .listaArrow{
+    transform: rotate(90deg) ;
+}
+.listaArrow{
+    margin-left: auto;
+    transition: transforms .3s;
+}
+.listaShow {
+    height: 0;
+    overflow: hidden;
+    transition: height 0.3s ease;
+}
+.listaShow.open {
+    height: auto;
+}
+.logo{
+    width: 90px;
+    margin: 60px auto;
+    background-color: #00000091;
+}
+.logoSena{
+    height: 90px;
+
+}
+.sect{
+    background-color: #000;
+    width: 80%;
+    height: 100vh;
+    display: none;
+}

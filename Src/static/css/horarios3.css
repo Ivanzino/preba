@@ -1,0 +1,94 @@
+html {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    background-image: url("../img/CIDT-Barrancabermeja.jpg");
+    background-size: cover;
+    margin: 0px;
+    padding: 0px;
+}
+body{
+    padding: 0;
+    margin: 0;
+}
+
+nav {
+    background-color: #33333380;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100px;
+}
+
+nav ul li {
+    align-items: center;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 0px 25px;
+    font-size: 15px;
+    font-weight: bolder;
+}
+
+
+ul {
+    display: flex;
+    list-style: none;
+    list-style-type: none;
+    margin: 0%;
+    padding: 0%;
+}
+
+header {
+    width: 100%;
+    position: fixed;
+}
+
+header ul li:hover {
+    background-color: #00ff1a;
+
+}
+
+header ul li {
+    position: relative;
+}
+
+header ul li ul.dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #059212;
+    box-shadow: 0 10px 16px rgba(0, 0, 0, 0.2);
+    width: 100%;
+}
+
+header ul li:hover ul.dropdown {
+    display: block;
+    text-align: center;
+}
+
+header ul li ul.dropdown li {
+    width: 100%;
+}
+
+header ul li ul.dropdown li a {
+    padding: 15px;
+    display: block;
+}
+.login {
+    font-size: 30px;
+    margin-right: 1%;
+    color: #059212;
+}
+
+.bi:hover {
+    background-color: #33333380;
+    cursor: pointer;
+}
+
+.login {
+    border: none;
+}

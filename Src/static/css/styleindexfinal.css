@@ -1,0 +1,304 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+}
+
+/* Estilos para el encabezado */
+header {
+    /* background-color: rgb(0, 0, 0); */
+    /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); */
+    /* backdrop-filter: blur(20px); */
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 50;
+    padding: 1rem 1.5rem;
+    /* Py: 4, Px: 6 */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+/* Estilos para el contenedor del logo y texto */
+header .flex {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    /* Espacio entre logo y texto */
+}
+
+/* Estilos para el logo */
+header img {
+    height: 4.5rem;
+    width: 5rem;
+    /* margin-left: 2%; */
+    /* 10px en la imagen */
+}
+
+/* Estilos para el texto del logo */
+header .text-color-base {
+    color: #1A3A5C;
+    /* Ajusta este color al valor que uses como base */
+}
+
+header .font-extrabold {
+    font-weight: 800;
+}
+
+header .text-3xl {
+    font-size: 1.875rem;
+    /* Aproximadamente 3xl */
+}
+
+/* Estilos para los botones */
+header button {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+header button.bg-blue-500 {
+    background-color: #fff;
+    /* Azul */
+    color: black;
+}
+
+header button.bg-blue-500:hover {
+    background-color: #2563eb;
+    /* Azul más oscuro */
+    transform: scale(1.05);
+}
+
+header button.bg-color-base {
+    background-color: #4e8e37;
+    /* Ajusta el color base según sea necesario */
+    color: white;
+}
+
+header button.bg-color-base:hover {
+    background-color: #10B981;
+    /* Verde más oscuro */
+}
+.headr{
+    background-color: red;
+    /* width: 20%; */
+}
+.bg-image-base {
+    position: relative;
+    background-image: url(../img/CIDT-Barrancabermeja.jpg);
+    background-size: var(--background-size);
+    background-position: var(--background-position);
+    background-repeat: var(--background-repeat);
+
+}
+
+.bg-image-base::after {
+    backdrop-filter: blur(5px);
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.695);
+    pointer-events: none;
+}
+
+
+.sena-horarios {
+    position: absolute;
+    top: 8%;
+    left: 43%;
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    font-size: 36px;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    background-color: transparent;
+}
+
+.imagen-adso {
+    position: relative;
+    left: 120%;
+}
+
+.titulo-div {
+    /* margin-left: 30%; */
+    /* display: inline-block; */
+
+    /* justify-content: space-between; */
+    /* align-items: center; */
+    /* text-align: left; */
+    /* margin-bottom: 1%; */
+
+
+}
+
+.titulo-div img {
+    width: 80px;
+    height: 70px;
+
+
+}
+
+.click-div {
+    position: relative;
+    bottom: 10px;
+}
+
+#click {
+    font-size: 15px;
+
+}
+ 
+body {
+    background-image: url(../img/CIDT-Barrancabermeja.jpg);
+    background-color: rgb(255, 255, 255); /* Blanco semitransparente */
+    background-repeat: no-repeat;
+    background-size: cover;
+    backdrop-filter: blur(7px);
+    height: 100vh;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative; /* Para colocar un elemento hijo encima */
+}
+
+ 
+
+.imagenaprendiz {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    z-index: 50;
+    width: auto;
+    height: 40%;
+    padding: 0%;
+}
+
+
+ 
+
+.sect {
+    width: 100%;
+    height: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: red; */
+    /* border: 2px solid chartreuse; */
+}
+ 
+
+img {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.container {
+    padding: 5%;
+    width: 80%;
+    height: 100%;
+    /* width: 1000px;
+    height: 340px; */
+    display: flex;
+    gap: 10px;
+    margin-inline: 50px;
+    margin: auto;
+}
+
+.card {
+    min-width: 70px;
+    height: 100%;
+    border-radius: 30px;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    flex-grow: 1;
+    cursor: pointer;
+    position: relative;
+    transition: flex-grow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    min-height: 200px;
+}
+
+.card.active {
+    flex-grow: 100;
+}
+
+.card:hover {
+    flex-grow: 7;
+}
+
+.card>.background {
+    position: absolute;
+    inset: 0;
+    object-fit: cover;
+    object-position: center;
+    
+    transition: var(--transition-timing) ease;
+}
+
+.card:hover>.background {
+    filter: brightness(1);
+}
+
+.card>.card-content {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    bottom: 20px;
+    overflow: hidden;
+    transition: var(--transition-timing);
+    z-index: 10;
+}
+
+.card:hover>.card-content {
+    inset: 20px;
+    top: auto;
+}
+
+.card-content>* {
+    transition: var(--transition-timing);
+}
+
+.card-content>.title {
+    white-space: pre;
+    margin-left: 10px;
+    translate: 0 100%;
+    opacity: 0;
+}
+
+.card .title {
+    opacity: 1;
+    translate: 0 0;
+}
+
+.card>.backdrop {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100px;
+    z-index: 0;
+    background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.7));
+}
+  

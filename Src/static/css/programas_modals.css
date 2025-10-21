@@ -1,0 +1,232 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,521;1,521&display=swap");
+
+/* ================= Reset y Estilos Base ================= */
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    font-family: "Montserrat", sans-serif !important;
+    font-optical-sizing: auto !important;
+    font-weight: 500 !important;
+    font-style: normal !important;
+    background: url('../img/3d-background-with-white-cubes.jpg') no-repeat center/cover;
+    overflow-y: auto;
+}
+
+.caja_total {
+    margin: 8%;
+    padding: 0;
+}
+
+/* ================= Modal (clase .modal genérica) ================= */
+.modal-content {
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+
+.modal-header, .modal-footer {
+    border: none;
+}
+
+
+.close-2,
+.close3 {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* ================= Contenedor de Botón de Archivo ================= */
+.container-btn-file {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    margin: 3% auto;
+    background: #307750;
+    color: #fff;
+    padding: 1em 2em;
+    border-radius: 0.5em;
+    overflow: hidden;
+    z-index: 1;
+    box-shadow: 4px 8px 10px -3px rgba(0, 0, 0, 0.356);
+    transition: all 250ms;
+    cursor: pointer;
+}
+
+.container-btn-file input[type="file"] {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.container-btn-file svg {
+    margin-right: 1em;
+}
+
+.container-btn-file::before {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 0;
+    border-radius: 0.5em;
+    background: #469b61;
+    z-index: -1;
+    transition: all 350ms;
+}
+
+.container-btn-file:hover::before {
+    width: 100%;
+}
+
+/* ================= Otros Estilos ================= */
+#cedula2 {
+    cursor: not-allowed;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto;
+}
+
+table th {
+    background: #28a745;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+}
+
+table td {
+    text-align: center;
+    padding: 10px;
+}
+table.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f5f5f5;
+}
+
+table.table-striped tbody tr:hover {
+    background-color: #e6f5ea;
+    transition: background-color 0.3s ease-in-out;
+}
+
+table i.bi {
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+table i.bi:hover {
+    transform: scale(1.15);
+}
+
+
+/* ================= Fix overflow tabla de fichas ================= */
+#fichas-section {
+    margin-top: 2rem;
+    overflow-x: auto;
+    /* Añade espacio para el scroll horizontal */
+    padding-bottom: 1rem;
+}
+
+#fichas-section table {
+    min-width: 1200px;
+}
+
+/* ================== Caja Nuevo Instructor ================== */
+.caja_nuevo {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    display: none;
+    height: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(66, 65, 65, 0.095);
+    backdrop-filter: blur(2px);
+    z-index: 1000;
+}
+
+.contenedor1 {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    width: 50%;
+    margin: auto;
+    text-align: center;
+    position: relative;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #444;
+}
+
+.probar {
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.labelselect2 {
+    align-items: center;
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto 15px;
+}
+
+.migueljaimes select {
+    width: 95% !important;
+    box-sizing: border-box;
+}
+
+
+.labelselect2 input,
+.labelselect2 select {
+    width: 250px;
+    padding: 6px;
+    margin: 5% 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #333;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.63);
+}
+
+#registro-form2 input:disabled,
+#registro-form2 select:disabled {
+    background: #f0f0f0;
+    color: #999;
+    cursor: not-allowed;
+    border: 1px solid #ccc;
+}
+
+#formacion {
+    width: 100%;
+}
+
+#centroform {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+}
+
+#action-btn {
+    justify-content: center;
+    text-align: center;
+    margin-right: auto;
+}

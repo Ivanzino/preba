@@ -1,0 +1,8 @@
+/* Resalta la fila de la ficha seleccionada en la tabla */
+.highlight {
+    background-color: #d1ecf1;
+  }
+
+.alert.alert-info.d-flex.align-items-center.justify-content-between {
+  background-color: rgba(104, 255, 139, 0.384);
+}

@@ -1,0 +1,18 @@
+.tablas{
+    display: grid;
+    grid-template-columns: 100px 100px 100px;
+    /* grid-template-rows: 50% 30% 30%; */
+    /* background-color: black; */
+    border: 2px solid black;
+}
+.hola{
+    grid-column: 2; 
+    display: grid;
+    grid-template-columns: 40% 40% 20%;
+    grid-template-rows: 50% 50% 
+    
+}
+.i{
+    /* padding: 100px; */
+    border: 1px solid black ;
+}

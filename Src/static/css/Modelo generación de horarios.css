@@ -1,0 +1,860 @@
+/* ===========================================
+   🎨 Variables de color y diseño
+   Define paleta de colores, tamaños y transiciones
+   =========================================== */
+:root {
+    /* Colores principales del tema */
+    --sena-green: #009739;
+    /* Verde institucional SENA */
+    --sena-dark: #005A30;
+    /* Verde oscuro para textos y bordes */
+    --sena-light: #E6F4EA;
+    /* Fondo claro suave */
+
+    --nav-bg: #012a19;
+    /* Color de fondo de la barra de navegación */
+    --nav-active: #00ff85;
+    /* Color del indicador y estado activo */
+    --nav-hover: #007f50;
+    /* Color al pasar el cursor sobre nav */
+    --slot-hover: rgba(0, 151, 57, 0.8);
+    /* Fondo al hover en bloques de horario */
+
+    /* Transiciones y dimensiones */
+    --transition: 0.3s ease;
+    /* Duración y tipo de transición */
+    --row-height: 60px;
+    /* Altura de cada fila en la cuadrícula */
+    --grid-gap: 8px;
+    /* Espacio entre celdas de la cuadrícula */
+}
+
+/* ===========================================
+   Reset global
+   Elimina márgenes y paddings por defecto
+   =========================================== */
+* {
+    box-sizing: border-box;
+    /* Incluye padding y bordes en el ancho/alto */
+    margin: 0;
+    /* Quita márgenes predeterminados */
+    padding: 0;
+    /* Quita padding predeterminado */
+}
+
+/* ===========================================
+   Estilos base del body
+   Define fondo, color de texto y tipografía
+   =========================================== */
+body {
+    background: var(--sena-light);
+    /* Fondo general */
+    color: var(--sena-dark);
+    /* Color de texto */
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    /* Tipografía */
+    overflow: hidden;
+    zoom: 65%;
+}
+
+/* ===========================================
+   Header fijo
+   Barra superior con fondo oscuro y sombra
+   =========================================== */
+header {
+    background: var(--nav-bg);
+    /* Fondo de la cabecera */
+    padding: 15px 30px;
+    /* Espaciado interno */
+    position: sticky;
+    top: 0;
+    /* Fija la barra al top al hacer scroll */
+    z-index: 10;
+    /* Coloca encima de otros elementos */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+    /* Sombra debajo del header */
+}
+
+/* ===========================================
+   Navegación principal
+   Contenedor horizontal centrado
+   =========================================== */
+nav {
+    display: flex;
+    /* Flexbox para distribuir botones */
+    justify-content: center;
+    /* Centra horizontalmente */
+    gap: 30px;
+    /* Espacio entre botones */
+}
+
+/* ===========================================
+   Botones de navegación (turnos)
+   Sin estilos por defecto, con efectos hover/active
+   =========================================== */
+.nav-btn {
+    position: relative;
+    /* Para posicionar el indicador ::after */
+    background: none;
+    border: none;
+    /* Sin fondo ni borde nativo */
+    color: var(--sena-light);
+    /* Color de texto en nav */
+    font-size: 18px;
+    /* Tamaño de fuente */
+    padding: 8px 12px;
+    /* Espaciado interno */
+    cursor: pointer;
+    /* Cursor de mano */
+    transition: color var(--transition);
+    /* Transición suave al cambiar color */
+}
+
+.nav-btn:hover {
+    color: var(--nav-hover);
+    /* Color al pasar el cursor */
+}
+
+/* Indicador inferior animado en botones nav */
+.nav-btn::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 50%;
+    /* Empieza centrado con ancho 0 */
+    width: 0;
+    height: 3px;
+    background: var(--nav-active);
+    /* Color del indicador */
+    transition: width var(--transition), left var(--transition);
+    border-radius: 2px 2px 0 0;
+    /* Bordes redondeados arriba */
+}
+
+/* Estado activo de navegación */
+.nav-btn.active {
+    color: var(--nav-active);
+    /* Color de texto activo */
+}
+
+.nav-btn.active::after {
+    width: 100%;
+    left: 0;
+    /* Expande el indicador todo el ancho */
+}
+
+/* ===========================================
+   Main: contenido principal
+   =========================================== */
+main {
+    padding: 30px;
+    /* Espaciado alrededor del contenido */
+}
+
+/* ===========================================
+   Botones de exportación
+   =========================================== */
+.btn-export {
+    margin: 10px 10px 20px 0;
+    /* Margen externo */
+    padding: 10px 20px;
+    /* Espaciado interno */
+    background: var(--sena-green);
+    /* Fondo verde */
+    color: #fff;
+    /* Texto blanco */
+    border: none;
+    border-radius: 8px;
+    /* Bordes redondeados */
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* ===========================================
+   Cuadrícula de horarios
+   Define filas automáticas y espacio entre celdas
+   =========================================== */
+.grid {
+    display: grid;
+    gap: var(--grid-gap);
+    grid-auto-rows: var(--row-height);
+    margin-bottom: 40px;
+}
+
+/* ===========================================
+   Secciones ocultas/visibles
+   =========================================== */
+section {
+    display: none;
+    /* Oculta por defecto */
+}
+
+section.active {
+    display: block;
+    /* Muestra la sección activa */
+}
+
+/* ===========================================
+   Celdas y encabezados de la tabla de horarios
+   =========================================== */
+.header,
+.time-cell,
+.cell {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid var(--sena-dark);
+    border-radius: 6px;
+    background: #fff;
+}
+
+.header {
+    background: var(--sena-green);
+    /* Fondo verde para encabezados */
+    color: #fff;
+    /* Texto blanco */
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    z-index: 2;
+    /* Encima de las celdas */
+}
+
+.time-cell {
+    background: var(--sena-light);
+    /* Fondo claro para celdas de tiempo */
+    font-weight: bold;
+    position: relative;
+    z-index: 1;
+}
+
+.cell {
+    position: relative;
+    background: #fdfdfd;
+    transition: background var(--transition);
+    overflow: visible;
+    z-index: 1;
+}
+
+.cell:hover {
+    background: #f0fff5;
+    /* Cambia leve al pasar cursor */
+}
+
+.cell.disabled {
+    background-color: #f0f0f0;
+    /* Gris para deshabilitado */
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+/* ===========================================
+   Bloques de horario (time-slot)
+   Posición absoluta dentro de cada celda
+   =========================================== */
+.time-slot {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--row-height);
+    padding: 6px 8px;
+    background: var(--sena-green);
+    color: #fff;
+    border-radius: 6px;
+    cursor: grab;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform var(--transition), box-shadow var(--transition), background var(--transition), height var(--transition);
+    z-index: 2;
+}
+
+.time-slot:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    background: var(--slot-hover);
+}
+
+/* Contenido interno de los bloques */
+.slot-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.slot-content div {
+    font-size: 12px;
+    text-align: left;
+}
+
+.slot-title {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* ===========================================
+   Placeholder visual al arrastrar
+   =========================================== */
+.placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 151, 57, 0.2);
+    border: 2px dashed var(--sena-green);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* ===========================================
+   Animación shake para errores
+   =========================================== */
+.shake {
+    animation: shake 0.3s;
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    20%,
+    60% {
+        transform: translateX(-5px);
+    }
+
+    40%,
+    80% {
+        transform: translateX(5px);
+    }
+}
+
+/* ===========================================
+   Modales y overlays genéricos
+   =========================================== */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    display: none;
+    /* Oculto por defecto */
+    z-index: 9000;
+}
+
+.modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.modal input,
+.modal select {
+    width: 100%;
+    /* Inputs ajustados al ancho */
+    margin: 5px 0;
+    padding: 8px;
+}
+
+.modal button {
+    margin-top: 10px;
+    padding: 8px 12px;
+}
+
+/* ===========================================
+   Responsive para pantallas pequeñas
+   =========================================== */
+@media (max-width: 768px) {
+    .grid {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .grid>div {
+        display: inline-block;
+        vertical-align: top;
+        min-width: 150px;
+    }
+}
+
+/* ===========================================
+   Salto de página (para exportar/imprimir)
+   =========================================== */
+.page-break {
+    page-break-after: always;
+    page-break-inside: avoid;
+    page-break-before: auto;
+    margin: 0;
+    padding: 0;
+    border: none;
+    height: 0;
+    width: 0;
+    overflow: hidden;
+    visibility: hidden;
+}
+
+/* ===========================================
+   Estilos adicionales de librerías externas
+   =========================================== */
+.swal2-input,
+.swal2-select {
+    width: 60% !important;
+    box-sizing: border-box;
+}
+
+/* Modales específicos para slots y RAPS */
+#info-overlay,
+#form-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 10, 30, 0.85);
+    backdrop-filter: blur(8px);
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+}
+
+#info-modal {
+    background: linear-gradient(135deg, rgba(0, 151, 57, 0.9), rgba(0, 72, 36, 0.9));
+    padding: 2.5rem;
+    border-radius: 16px;
+    width: 650px;
+    max-width: 95%;
+    max-height: 85vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 0 20px rgba(0, 255, 133, 0.7), 0 0 40px rgba(0, 255, 133, 0.5);
+    animation: fadeInScale 0.5s ease-out forwards, neonPulse 1.5s infinite alternate;
+    transform: scale(0.7);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    z-index: 10001;
+    color: #e6f4ea;
+    border: 2px solid rgba(0, 255, 133, 0.8);
+}
+
+.futuristic-theme {
+    transform: scale(0.7);
+    opacity: 0;
+    animation: fadeInScale 0.5s ease-out forwards, rotateEntry 0.7s ease-out;
+}
+
+@keyframes fadeInScale {
+    0% {
+        opacity: 0;
+        transform: scale(0.7);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes neonPulse {
+    from {
+        box-shadow: 0 0 15px rgba(0, 255, 133, 0.5);
+    }
+
+    to {
+        box-shadow: 0 0 30px rgba(0, 255, 133, 1);
+    }
+}
+
+@keyframes rotateEntry {
+    0% {
+        transform: rotateX(-90deg) scale(0.7);
+        opacity: 0;
+    }
+
+    100% {
+        transform: rotateX(0) scale(1);
+        opacity: 1;
+    }
+}
+
+.modal-title {
+    font-size: 2rem;
+    color: #000000;
+    margin-bottom: 1.2rem;
+    text-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
+}
+
+.close-info-modal {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.6rem;
+    color: #e6f4ea;
+    cursor: pointer;
+    transition: transform 0.2s, color 0.2s;
+}
+
+.close-info-modal:hover {
+    color: #00ff85;
+    transform: scale(1.2) rotate(20deg);
+}
+
+.raps-section {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: linear-gradient(135deg, #1e1f26, #2d2f4a);
+    border: 1px solid #3c3f5e;
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(98, 107, 255, 0.3);
+    color: #d0d4ff;
+}
+
+.raps-section h4 {
+    margin-top: 0;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid #51557d;
+    padding-bottom: 0.5rem;
+    color: #9ca4ff;
+}
+
+.raps-scroll {
+    max-height: 150px;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}
+
+#info-raps p {
+    margin-bottom: 0.5rem;
+    padding: 0.4rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-left: 3px solid #6272ff;
+    border-radius: 6px;
+}
+
+#info-modal p {
+    color: #e6f4ea;
+    margin: 0.5rem 0;
+    line-height: 1.6;
+}
+
+
+/* Tipografía alterna para componentes globales */
+body {
+    font-family: sans-serif;
+}
+
+button {
+    cursor: pointer;
+}
+
+.nav-left #sede-label {
+    font-size: 1.85rem;
+    font-weight: bold;
+
+    color: rgb(255, 255, 255);
+}
+
+
+
+.main-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.nav-center,
+.nav-right {
+    display: flex;
+    align-items: center;
+}
+
+.nav-center {
+    gap: .5rem;
+}
+
+.nav-right {
+    position: relative;
+}
+
+.export-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    flex-direction: column;
+    width: auto;
+    /* tamaño fijo para todos los botones */
+    overflow: hidden;
+    /* bordes redondeados aplican bien */
+}
+
+.export-menu.open {
+    display: flex;
+}
+
+.export-menu .btn-export {
+    background-color: white;
+    color: #00994d;
+    padding: 10px 16px;
+    border: none;
+    text-align: left;
+    width: 100%;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    border-bottom: 1px solid #eee;
+}
+
+.export-menu .btn-export:last-child {
+    border-bottom: none;
+}
+
+.export-menu .btn-export:hover {
+    background-color: #f5f5f5;
+    color: #007a3d;
+}
+
+
+#toggle-export {
+    position: relative;
+    padding-right: 1.5em;
+    /* espacio para la flecha */
+}
+
+/* flecha por defecto */
+#toggle-export::after {
+    content: "▾";
+    /* triángulo hacia abajo */
+    position: absolute;
+    right: 0.5em;
+    top: 50%;
+    transform: translateY(-50%) rotate(0deg);
+    transition: transform 0.3s ease;
+}
+
+/* cuando el botón tenga la clase open, gira la flecha */
+#toggle-export.open::after {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+
+
+
+
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    /* espacio entre el botón y el label */
+    font-size: 1.65rem;
+    font-weight: bold;
+}
+
+/* estilo del botón dentro de nav-left (reusa el .btn-home o adáptalo) */
+.btn-home {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    /* background: #39A900; */
+    color: rgb(255, 255, 255);
+    border-radius: 0.375rem;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+.btn-home:hover {
+    background: #1e7e34;
+}
+
+.btn-home i {
+    font-size: 1.85rem;
+}
+
+/* Aseguramos que todo el contenedor sea flex y alinee a la derecha */
+#fichas-btn-container {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+/* Contenedor interno de selects + botón */
+.filters-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+/* Estilo base para los selects */
+.filter-select {
+    padding: 8px 12px;
+    font-size: 14px;
+    border: 1px solid var(--sena-dark);
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+}
+
+/* Botón “Ver resumen” puede reutilizar .btn-export */
+#view-summary.btn-export {
+    margin: 0;
+    /* elimina márgenes extra */
+}
+
+/* Si quieres diferenciarlo visualmente: */
+#view-summary {
+    background: var(--sena-dark);
+    color: #fff;
+}
+
+
+/* ===========================================
+   Estilos para el modal de resumen
+   =========================================== */
+/* Agrandamos y columnas con barras */
+#summary-modal {
+    width: 80vw;
+    /* ocupa 80% del ancho de la ventana */
+    max-width: 900px;
+    height: 70vh;
+    /* altura más generosa */
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.summary-content {
+    flex: 1;
+    display: flex;
+    /* columnas iguales */
+    justify-content: space-between;
+    gap: 1rem;
+    overflow: hidden;
+}
+
+/* Cada columna ocupa un tercio */
+.summary-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.summary-section ul {
+    flex: 1;
+    overflow-y: auto;
+    padding-left: 1rem;
+    margin: 0;
+}
+
+/* Barras separadoras verticales */
+.divider {
+    width: 2px;
+    background: rgba(0, 0, 0, 0.2);
+    height: 100%;
+    align-self: stretch;
+}
+
+/* Ajuste botón abajo */
+#assign-btn {
+    margin-top: 1rem;
+    align-self: flex-end;
+}
+
+
+/* ===========================================
+   Estilos para la leyenda de colores
+   =========================================== */
+/* Contenedor de leyenda */
+
+/* Cada sección es “relative” */
+.shift {
+  position: relative;
+}
+
+/* Anclamos el legend al bottom-left */
+.shift .legend-container {
+  position: absolute;
+  top: 720px; ; 
+  left: 8px;    /* margen izquierdo */
+  margin: 0;    /* quita cualquier otro margen */
+}
+
+/* Estilos generales del legend */
+.legend-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  /* margin-top: 15px;  <-- borrado */
+  padding: 10px;
+  background: #f5f5f5;
+  border: 1px solid var(--sena-dark);
+  border-radius: 6px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  background: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.legend-color {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  border: 1px solid #ccc;
+}
+
+/* ===========================================
+   Botones de “Atrás” y “Siguiente”
+   =========================================== */
+.pagination-controls {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+    z-index: 1000;
+}
+
+.btn-nav {
+    padding: 10px 16px;
+    background: var(--sena-dark);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background var(--transition);
+}
+
+.btn-nav:hover {
+    background: var(--nav-hover);
+}

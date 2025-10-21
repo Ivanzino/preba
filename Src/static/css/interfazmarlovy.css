@@ -1,0 +1,161 @@
+/* Reset y configuración global */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url(../img/CIDT-Barrancabermeja.jpg) no-repeat center center fixed;
+    background-size: cover;
+}
+
+:root {
+    --base-text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+    --hover-text-shadow: 0 0 15px rgba(255, 255, 255, 1);
+}
+
+/* Componentes generales */
+.horario { width: 100%; }
+
+.fondo_bl {
+    background: linear-gradient(120deg, #ebebeb, #ebebebee, #ebebebe2);
+}
+
+form { display: block; }
+
+/* Modal */
+.modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+
+/* Contenedor analizar */
+.contenedor_analizar {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+    width: 40%;
+    height: 35vh;
+    margin: 5% auto;
+    transition: box-shadow 0.3s ease;
+}
+
+/* Botón registrar */
+.boton_registrar {
+    position: relative;
+    top: 280px;
+    right: 45%;
+    background-color: #4CAF50;
+    width: 7%;
+    height: 12%;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.boton_registrar:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+}
+
+.boton_registrar:active { transform: translateY(0); }
+
+/* Navegación SENA */
+.sena-nav ul li {
+    display: inline-block;
+    position: relative;
+}
+
+.sena-nav ul li a {
+    padding: 10px;
+    color: white;
+    display: block;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+    transition: color 0.3s;
+}
+
+.sena-nav ul li ul {
+    display: none;
+    position: absolute;
+    background-color: #4CAF50;
+    padding: 10px;
+    list-style: none;
+    margin: 0;
+}
+
+.sena-nav ul li:hover ul { display: block; }
+
+.sena-nav ul li ul li a {
+    padding: 10px 15px;
+    color: white;
+    display: block;
+}
+
+/* Overlay hero */
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.2);
+    animation: overlayPulse 5s infinite alternate;
+    z-index: 1;
+}
+
+@keyframes overlayPulse {
+    0% { background: rgba(0, 0, 0, 0.2); }
+    100% { background: rgba(0, 0, 0, 0.3); }
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 2rem;
+    animation: fadeIn 1s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-100px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Texto y fuentes */
+h2, h3, p {
+    text-align: center;
+    color: #fff;
+    font-size: xx-large;
+    text-shadow: var(--base-text-shadow);
+    letter-spacing: 1px;
+    transition: transform 0.3s ease, text-shadow 0.3s ease;
+}
+
+h2:hover, h3:hover, p:hover {
+    transform: scale(1.05);
+    text-shadow: var(--hover-text-shadow);
+}

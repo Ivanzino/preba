@@ -1,0 +1,262 @@
+body{
+    height: 100vh;
+}
+
+#option{
+    color: white;
+}
+
+
+.botones {
+    
+    display: flex;
+    justify-content: space-between;
+    margin-left: 5%;
+    width: 200px;
+}
+
+
+
+
+hr {
+    border: 0;
+    height: 2px;
+    background: #28a745;
+    margin: 20px 0;
+}
+
+.contprincipal {
+    display: flex;
+}
+
+.sena-nav {
+    padding: 15px 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background: #28a745;
+}
+
+.sena-nav ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+}
+
+.sena-nav ul li {
+    margin: 0 15px;
+}
+
+.sena-nav ul li a {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.sena-nav ul li a:hover {
+    background-color: #e56b00;
+    transform: scale(1.05);
+}
+
+.sena-nav ul li a:active {
+    background-color: #c65a00;
+}
+
+
+.content {
+    margin-top: 70px;
+}
+
+
+.boton button {
+    background: #28a745;
+}
+
+
+/* 
+body {
+    font-family: 'Work Sans', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    overflow: auto;
+}
+ */
+
+
+
+
+.logo {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.nav-menu {
+    list-style: none;
+    display: flex;
+}
+
+.nav-menu li {
+    margin-left: 20px;
+}
+
+.nav-menu a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+    transition: color 0.3s;
+}
+
+.nav-menu a:hover {
+    color: #218838;
+}
+
+main {
+    padding-top: 100px;
+}
+
+.hero {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url(../img/CIDT-Barrancabermeja.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.hero-content {
+    max-width: 700px;
+    display: block;
+    margin-right: 600px;
+    margin-top: 60px;
+}
+
+.hero h2 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.hero p {
+    font-size: 30px;
+    margin-bottom: 30px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+
+
+.sena-nav ul li {
+    display: inline-block;
+    position: relative;
+}
+
+.sena-nav ul li a {
+    padding: 10px 10px;
+    text-decoration: none;
+    color: white;
+    display: block;
+}
+
+.sena-nav ul li ul {
+    display: none;
+    position: absolute;
+    background-color: #4CAF50;
+    padding: 10px;
+    list-style: none;
+    margin: 0;
+}
+
+.sena-nav ul li:hover ul {
+    display: block;
+}
+
+.sena-nav ul li ul li {
+    display: block;
+}
+
+.sena-nav ul li ul li a {
+    padding: 10px 15px;
+    color: white;
+    display: block;
+}
+
+.sena-nav ul li ul li a:hover {
+    background-color: #45a049;
+}
+
+/* section {
+    height: auto;
+} */
+
+
+
+/* === Estilos para el modal de perfiles === */
+
+/* Estilo para los subperfiles */
+.subperfil-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    margin-bottom: 5px;
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+}
+
+/* Botón para eliminar subperfil */
+.btn-remove-subperfil {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+}
+.btn-remove-subperfil:hover {
+    background: #c0392b;
+}
+
+/* Fix para el select */
+#nuevo-subperfil {
+    flex: 1;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Fix para el botón de agregar */
+#btn-agregar-subperfil {
+    background: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 6px 12px;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap;
+}
+#btn-agregar-subperfil:hover {
+    background: #229954;
+}

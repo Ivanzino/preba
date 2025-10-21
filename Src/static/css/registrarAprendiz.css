@@ -1,0 +1,93 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f2f2f2;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 600px;
+  margin: 50px auto;
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.container h1 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+/* Contenedor para la selección de archivo */
+.file-upload-container {
+  border: 2px dashed #dddddd;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  background-color: #fafafa;
+}
+
+.file-upload-container span {
+  display: block;
+  margin: 10px 0;
+  font-size: 16px;
+  color: #333333;
+}
+
+/* Etiqueta para "Seleccionar archivo" */
+.file-label {
+  display: inline-block;
+  background-color: #f8f8f8;
+  padding: 10px 20px;
+  border-radius: 4px;
+  border: 1px solid #cccccc;
+  cursor: pointer;
+  color: #333;
+  font-size: 16px;
+}
+
+/* Ocultamos el input para que se use el label como botón */
+#file-input {
+  display: none;
+}
+
+/* Botón de "ANALIZAR" */
+.analyze-button {
+  background-color: #28a745;
+  color: #ffffff;
+  padding: 15px 30px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.analyze-button:hover {
+  background-color: #218838;
+}
+
+/* Texto de archivo seleccionado */
+#file-selected {
+  color: #999999;
+  font-size: 14px;
+}
+.container {
+    opacity: 0;                     /* Comienza invisible */
+    animation: aparecer 0.8s ease-out forwards; /* Anima la opacidad */
+  }
+  
+  @keyframes aparecer {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  

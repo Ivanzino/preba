@@ -1,0 +1,202 @@
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+  margin: 0;
+  background-image: url(../img/3d-background-with-white-cubes.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+ 
+}
+
+.form-container {
+  width: 40%;
+  padding: 20px;
+  margin: 20px auto;
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+ 
+}
+
+h3 {
+  font-size: 22px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+h5{
+  margin:5px 0px 15px 0px;
+}
+
+.centro,
+.nombreSede,
+.municipio,
+.horas {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.centro label,
+.nombreSede label,
+.municipio label,
+.horas label {
+  flex: 1; /* Ocupa un espacio proporcional */
+  text-align: left;
+  margin-right: 10px; /* Espaciado entre label y campo */
+}
+input[type="number"]
+ {
+  flex: 4; /* Campo más ancho que el label */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  
+}
+
+input[type="text"],
+select {
+  flex: 4; /* Campo más ancho que el label */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.sedePrincipal {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+#guardarBtn {
+  display: flex;
+  justify-self: center;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: bold;
+}
+
+#guardarBtn:hover {
+  background-color: #218838;
+}
+
+
+.switch-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.switch-label {
+  margin-left: 10px;
+  transition: color 0.3s ease;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+input:checked + .slider {
+  background-color: #28a745;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #28a745;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+/* Animación de onda al hacer clic */
+.slider:active:before {
+  width: 32px;
+}
+
+/* Texto ON/OFF dentro del switch */
+.slider:after {
+  content: "NO";
+  color: white;
+  display: block;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 70%;
+  font-size: 10px;
+  font-family: Verdana, sans-serif;
+}
+
+input:checked + .slider:after {
+  content: "SÍ";
+  left: 30%;
+}
+
+/* Animación de pulso */
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(40, 167, 69, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }
+}
+
+.pulse {
+  animation: pulse 0.5s;
+}
+
+
+.form-container {
+  opacity: 0;                     /* Comienza invisible */
+  animation: aparecer 0.8s ease-out forwards; /* Anima la opacidad */
+}
+
+@keyframes aparecer {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
